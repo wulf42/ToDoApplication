@@ -20,3 +20,28 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+
+.TaskContainer {
+    width: 100%;
+    height: 60vh;
+    background-color: red;
+    display: flex;
+    margin: 0 auto;
+}
+.Task{
+    height: 60vh;
+    text-align:center;
+    width: 100%;
+}
+.ToDo {
+    background-color: yellow;
+}
+.Inprogress {
+    background-color: blue;
+}
+
+.Done {
+    background-color: green;
+}
