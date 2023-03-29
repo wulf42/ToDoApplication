@@ -17,16 +17,10 @@ namespace ToDoApplication.Controllers
             return View(tasksToDoList);
 
         }
-        public IActionResult Add()
-        {
-            return View();
-        }
         public IActionResult Details()
         {
             return View();
         }
-
-
 
         [HttpGet]
         public IActionResult Details(int id)
@@ -42,7 +36,7 @@ namespace ToDoApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(body);
+                return RedirectToAction("Index");   //WiP - Add validation
             }
 
             var id = _taskToDoService.Save(body);
@@ -57,7 +51,5 @@ namespace ToDoApplication.Controllers
             _taskToDoService.Delete(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }
