@@ -10,11 +10,23 @@
 <div class="TaskContainer">
     <div class="Task ToDo">
         <h2>To Do</h2>
-        <ul>           
-            @foreach (var task in Model){
+        <ul>
+            @foreach (var task in Model)
+            {
                 if (task.Status.Equals(Status.ToDo))
                 {
-                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                    <li>
+                        <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
+                        -@task.Description
+                        -@task.Category
+                        -@task.Date
+                        -@task.Time
+                        @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
+                        {
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit">Usuń</button>
+                        }
+                    </li>
                 }
             }
         </ul>
@@ -25,7 +37,18 @@
             {
                 if (task.Status.Equals(Status.InProgress))
                 {
-                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                    <li>
+                        <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
+                        -@task.Description
+                        -@task.Category
+                        -@task.Date
+                        -@task.Time
+                        @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
+                        {
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit">Usuń</button>
+                        }
+                    </li>
                 }
             }
         </ul>
@@ -36,7 +59,18 @@
             {
                 if (task.Status.Equals(Status.Done))
                 {
-                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                    <li>
+                        <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
+                        -@task.Description
+                        -@task.Category
+                        -@task.Date
+                        -@task.Time
+                        @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
+                        {
+                            <input type="hidden" name="id" value="@task.TaskId" />
+                            <button type="submit">Usuń</button>
+                        }
+                    </li>
                 }
             }
         </ul>
