@@ -8,5 +8,6 @@ namespace ToDoApplication.Services.Interfaces
         TaskToDo Get(int id);
         List<TaskToDo> GetAll();
         int Save(TaskToDo taskToDo);
+        int Delete(int id);
     }
 }

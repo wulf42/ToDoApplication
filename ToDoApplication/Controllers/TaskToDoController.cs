@@ -51,6 +51,13 @@ namespace ToDoApplication.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _taskToDoService.Delete(id);
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

@@ -14,37 +14,30 @@ namespace ToDoApplication.Services
 
         public TaskToDo Get(int id)
         {
-
             var taskToDo = _context.TasksToDo.Find(id);
-
 
             return taskToDo;
         }
         public List<TaskToDo> GetAll()
         {
-
             var tasksToDoList = _context.TasksToDo.ToList();
-
 
             return tasksToDoList;
         }
-
-
         public int Save(TaskToDo taskToDo)
         {
-
             _context.TasksToDo.Add(taskToDo);
             _context.SaveChanges();
 
-            if (_context.SaveChanges() > 0)
-            {
-                System.Console.WriteLine("Sukces");
-            }
-            else
-            {
-                System.Console.WriteLine("fail");
-            };
             return taskToDo.TaskId;
         }
+        public int Delete(int id)
+        {
+            var taskToDo = _context.TasksToDo.Find(id);
+            _context.TasksToDo.Remove(taskToDo);
+            _context.SaveChanges();
+            return id;
+        }
+
     }
 }
