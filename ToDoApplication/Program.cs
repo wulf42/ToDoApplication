@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Context;
+using ToDoApplication.Services;
+using ToDoApplication.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Dependency injection
+builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
