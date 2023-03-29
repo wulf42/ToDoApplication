@@ -1,19 +1,45 @@
-﻿
+﻿@model IEnumerable<ToDoApplication.Models.TaskToDo>
 
 @{
     ViewData["Title"] = "Index";
 }
+
 
 <h1>Task</h1>
 
 <div class="TaskContainer">
     <div class="Task ToDo">
         <h2>To Do</h2>
-        <ul>
-            @*<li><b>@Model.Name</b> @Model.Description @Model.Date @Model.Category</li>*@
+        <ul>           
+            @foreach (var task in Model){
+                if (task.Status.Equals(Status.ToDo))
+                {
+                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                }
+            }
         </ul>
     </div>
-    <div class="Task Inprogress"><h2>In progress</h2></div>
-    <div class="Task Done"><h2>Done</h2></div>
+    <div class="Task Inprogress"><h2>In progress</h2>
+        <ul>
+            @foreach (var task in Model)
+            {
+                if (task.Status.Equals(Status.InProgress))
+                {
+                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="Task Done"><h2>Done</h2>
+        <ul>
+            @foreach (var task in Model)
+            {
+                if (task.Status.Equals(Status.Done))
+                {
+                    <li><a href="@Url.Action("details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a> - @task.Description -@task.Category -@task.Date-@task.Time</li>
+                }
+            }
+        </ul>
+    </div>
 </div>
 
