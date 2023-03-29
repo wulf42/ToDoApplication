@@ -2,14 +2,9 @@
 
 namespace ToDoApplication.Controllers
 {
-    public class HomeController : Controller
+    public class TaskToDoController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
