@@ -1,0 +1,16 @@
+﻿@model ToDoApplication.Models.TaskToDo
+
+<div class="AddTaskContainer">
+    @using (Html.BeginForm("Add", "TaskToDo", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+        @Html.TextBoxFor(x => x.Name)
+        //sprawdzić czy po podłączeniu do bazy jest ok i można usunąć , Model.Name="" itd
+        @Html.TextBoxFor(x => x.Description)
+        @Html.DropDownListFor(x => x.Category, new SelectList(Enum.GetValues(typeof(Category))),
+    "Select Category")
+        @Html.TextBoxFor(x => x.Date, new { @type = "date" })
+        @Html.TextBoxFor(x => x.Time, new { @type = "time" })
+        <button type="submit">Dodaj taska</button>
+    }
+</div>
