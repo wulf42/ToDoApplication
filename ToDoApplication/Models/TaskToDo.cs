@@ -2,7 +2,7 @@
 
 namespace ToDoApplication.Models
 {
-    public class Task
+    public class TaskToDo
     {
         [Key]
         public int TaskId { get; set; }
