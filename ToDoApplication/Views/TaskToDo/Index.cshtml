@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ToDoApplication.Models.TaskToDo>
+﻿@model dynamic
 
 @{
     ViewData["Title"] = "Index";
@@ -76,4 +76,8 @@
         </ul>
     </div>
 </div>
+<div class="addTaskContainer">
+@Html.Partial("_addForm",Model as IDictionary<string, object>)
+</div>
+
 
