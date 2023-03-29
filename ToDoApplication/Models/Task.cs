@@ -1,20 +1,24 @@
-﻿namespace ToDoApplication.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoApplication.Models
 {
     public class Task
     {
+        [Key]
         public int TaskId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
+        [Required]
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly Time { get; set; }
+        [Required]
         public Category Category { get; set; }
         public Status Status { get; set; }
-
-
     }
 
     public enum Category
     {
-        DeepWork, ShallowWork, Chores, Learning, MindCare, BodyCare, People
+        DeepWork, ShallowWork, Chores, Learning, MindCare, BodyCare, People, Other
     }
     public enum Status
     {
