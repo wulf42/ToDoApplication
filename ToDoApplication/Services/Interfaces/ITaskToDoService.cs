@@ -9,5 +9,8 @@ namespace ToDoApplication.Services.Interfaces
         List<TaskToDo> GetAll();
         int Save(TaskToDo taskToDo);
         int Delete(int id);
+        int EditStatus(int id);
+
+
     }
 }

@@ -39,5 +39,31 @@ namespace ToDoApplication.Services
             return id;
         }
 
+        //Move status to next (ToDo->InProgress, InProgress->Done)
+        public int EditStatus(int id)
+        {
+            var taskToDo = _context.TasksToDo.Find(id);
+
+            if (taskToDo.Status == Status.ToDo)
+            {
+                taskToDo.Status = Status.InProgress;
+                _context.TasksToDo.Update(taskToDo);
+                _context.SaveChanges();
+                return taskToDo.TaskId;
+            }
+            if (taskToDo.Status == Status.InProgress)
+            {
+                taskToDo.Status = Status.Done;
+                _context.TasksToDo.Update(taskToDo);
+                _context.SaveChanges();
+                return taskToDo.TaskId;
+            }
+
+
+
+
+
+            return taskToDo.TaskId;
+        }
     }
 }
