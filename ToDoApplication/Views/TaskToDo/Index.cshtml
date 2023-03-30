@@ -10,12 +10,12 @@
 <div class="TaskContainer">
     <div class="Task ToDo">
         <h2>To Do</h2>
-        <ul>
+        <ul class="list-group">
             @foreach (var task in Model)
             {
                 if (task.Status.Equals(Status.ToDo))
                 {
-                    <li>
+                    <li class="list-group-item list-group-item-info">
                         <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
                         -@task.Description
                         -@task.Category
@@ -24,7 +24,7 @@
                         @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                         {
                             <input type="hidden" name="id" value="@task.TaskId" />
-                            <button type="submit">Usuń</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Usuń</button>
                         }
                         <a href="@Url.Action("EditStatus","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>→</b></a>
 
@@ -34,12 +34,12 @@
         </ul>
     </div>
     <div class="Task Inprogress"><h2>In progress</h2>
-        <ul>
+        <ul class="list-group">
             @foreach (var task in Model)
             {
                 if (task.Status.Equals(Status.InProgress))
                 {
-                    <li>
+                    <li class="list-group-item list-group-item-info">
                         <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
                         -@task.Description
                         -@task.Category
@@ -48,7 +48,7 @@
                         @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                         {
                             <input type="hidden" name="id" value="@task.TaskId" />
-                            <button type="submit">Usuń</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Usuń</button>
                         }
                         <a href="@Url.Action("EditStatus","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>→</b></a>
 
@@ -58,12 +58,12 @@
         </ul>
     </div>
     <div class="Task Done"><h2>Done</h2>
-        <ul>
+        <ul class="list-group">
             @foreach (var task in Model)
             {
                 if (task.Status.Equals(Status.Done))
                 {
-                    <li>
+                    <li class="list-group-item list-group-item-info">
                         <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
                         -@task.Description
                         -@task.Category
@@ -72,7 +72,7 @@
                         @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                         {
                             <input type="hidden" name="id" value="@task.TaskId" />
-                            <button type="submit">Usuń</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Usuń</button>
                         }
                     </li>
                 }
@@ -80,8 +80,7 @@
         </ul>
     </div>
 </div>
+<h2>Add task</h2>
 <div class="addTaskContainer">
 @Html.Partial("_addForm",Model as IDictionary<string, object>)
 </div>
-
-
