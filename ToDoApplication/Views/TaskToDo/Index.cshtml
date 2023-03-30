@@ -26,6 +26,8 @@
                             <input type="hidden" name="id" value="@task.TaskId" />
                             <button type="submit">Usuń</button>
                         }
+                        <a href="@Url.Action("EditStatus","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>→</b></a>
+
                     </li>
                 }
             }
@@ -48,6 +50,8 @@
                             <input type="hidden" name="id" value="@task.TaskId" />
                             <button type="submit">Usuń</button>
                         }
+                        <a href="@Url.Action("EditStatus","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>→</b></a>
+
                     </li>
                 }
             }
