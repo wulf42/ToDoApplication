@@ -6,13 +6,17 @@ namespace ToDoApplication.Models
     {
         [Key]
         public int TaskId { get; set; }
+
         [Required]
         public string? Name { get; set; }
+
         public string? Description { get; set; }
         public DateOnly Date { get; set; }
         public TimeOnly Time { get; set; }
+
         [Required]
         public Category Category { get; set; }
+
         public Status Status { get; set; }
     }
 
@@ -20,6 +24,7 @@ namespace ToDoApplication.Models
     {
         DeepWork, ShallowWork, Chores, Learning, MindCare, BodyCare, People, Other
     }
+
     public enum Status
     {
         ToDo, InProgress, Done
