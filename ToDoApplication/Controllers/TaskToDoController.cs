@@ -7,19 +7,27 @@ namespace ToDoApplication.Controllers
     public class TaskToDoController : Controller
     {
         private readonly ITaskToDoService _taskToDoService;
+
         public TaskToDoController(ITaskToDoService taskToDoService)
         {
             _taskToDoService = taskToDoService;
         }
+
         public IActionResult Index()
         {
             var tasksToDoList = _taskToDoService.GetAll();
             return View(tasksToDoList);
-
         }
+
         public IActionResult Details()
         {
             return View();
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var task = _taskToDoService.Get(id);
+            return View(task);
         }
 
         [HttpGet]
@@ -51,10 +59,11 @@ namespace ToDoApplication.Controllers
             _taskToDoService.Delete(id);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public IActionResult EditStatus(int id)
+
+        [HttpPost]
+        public IActionResult Edit(int id, TaskToDo body)
         {
-            _taskToDoService.EditStatus(id);
+            _taskToDoService.Edit(id, body);
             return RedirectToAction("Index");
         }
     }

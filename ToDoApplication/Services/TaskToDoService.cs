@@ -7,6 +7,7 @@ namespace ToDoApplication.Services
     public class TaskToDoService : ITaskToDoService
     {
         private readonly ToDoApplicationDbContext _context;
+
         public TaskToDoService(ToDoApplicationDbContext context)
         {
             _context = context;
@@ -18,12 +19,14 @@ namespace ToDoApplication.Services
 
             return taskToDo;
         }
+
         public List<TaskToDo> GetAll()
         {
             var tasksToDoList = _context.TasksToDo.ToList();
 
             return tasksToDoList;
         }
+
         public int Save(TaskToDo taskToDo)
         {
             _context.TasksToDo.Add(taskToDo);
@@ -31,39 +34,36 @@ namespace ToDoApplication.Services
 
             return taskToDo.TaskId;
         }
+
         public int Delete(int id)
         {
             var taskToDo = _context.TasksToDo.Find(id);
             _context.TasksToDo.Remove(taskToDo);
             _context.SaveChanges();
-            return id;
+            return taskToDo.TaskId;
         }
 
-        //Move status to next (ToDo->InProgress, InProgress->Done)
-        public int EditStatus(int id)
+        public int Edit(int id, TaskToDo body)
         {
-            var taskToDo = _context.TasksToDo.Find(id);
-
-            if (taskToDo.Status == Status.ToDo)
+            var taskToUpdate = _context.TasksToDo.Find(id);
+            //Edit task form data
+            if (body.TaskId != 0)
             {
-                taskToDo.Status = Status.InProgress;
-                _context.TasksToDo.Update(taskToDo);
-                _context.SaveChanges();
-                return taskToDo.TaskId;
+                taskToUpdate.Name = body.Name;
+                taskToUpdate.Description = body.Description;
+                taskToUpdate.Category = body.Category;
+                taskToUpdate.Status = body.Status;
+                taskToUpdate.Date = body.Date;
+                taskToUpdate.Time = body.Time;
             }
-            if (taskToDo.Status == Status.InProgress)
+            //Move to next category (passed only int id, TaskToDo body is empty)
+            if (body.TaskId == 0)
             {
-                taskToDo.Status = Status.Done;
-                _context.TasksToDo.Update(taskToDo);
-                _context.SaveChanges();
-                return taskToDo.TaskId;
+                taskToUpdate.Status = body.Status;
             }
-
-
-
-
-
-            return taskToDo.TaskId;
+            _context.TasksToDo.Update(taskToUpdate);
+            _context.SaveChanges();
+            return taskToUpdate.TaskId;
         }
     }
 }
