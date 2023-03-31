@@ -1,0 +1,31 @@
+﻿@model ToDoApplication.Models.TaskToDo
+
+<div class="AddTaskContainer">
+
+    @using (Html.BeginForm("Add", "TaskToDo", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+        <div class="row">
+            <div class="col">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder="Name"})
+            </div>
+            <div class="col">
+                @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
+            </div>
+            <div class="col">
+                @Html.DropDownListFor(x => x.Category, new SelectList(Enum.GetValues(typeof(Category))),
+            "Select Category", new{ @class = "form-control" })
+            </div>
+            <div class="col">
+                @Html.TextBoxFor(x => x.Date, new { @type = "date" , @class = "form-control" })
+            </div><div class="col">
+                @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
+            </div><div class="col">
+                <button type="submit" class="btn btn-success">Dodaj taska</button>
+            </div>
+        </div>
+    }
+
+</div>
+
+

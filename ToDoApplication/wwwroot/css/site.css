@@ -1,22 +1,54 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.TaskContainer {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    margin: 0 auto;
+}
+
+.Task {
+    height: 60vh;
+    text-align: center;
+    width: 100%;
+}
+
+.ToDo {
+    background-color: #93BFCF;
+}
+
+.Inprogress {
+    background-color: #BDCDD6;
+}
+
+.Done {
+    background-color: #93BFCF;
+}
+
+.addTaskContainer {
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
 }

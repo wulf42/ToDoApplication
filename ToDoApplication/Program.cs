@@ -1,7 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using ToDoApplication.Context;
+using ToDoApplication.Services;
+using ToDoApplication.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Dependency injection
+builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
+
+// Register dbcontext
+builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ToDoAppDatabase")));
 
 var app = builder.Build();
 
@@ -22,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=TaskToDo}/{action=Index}/{id?}");
 
 app.Run();
