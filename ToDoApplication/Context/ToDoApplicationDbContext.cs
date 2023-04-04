@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ToDoApplication.Models;
 
 namespace ToDoApplication.Context
 {
-    public class ToDoApplicationDbContext : DbContext
+    public class ToDoApplicationDbContext : IdentityDbContext<User>
     {
         public ToDoApplicationDbContext(DbContextOptions<ToDoApplicationDbContext> options) : base(options)
         {

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Context;
+using ToDoApplication.Models;
 using ToDoApplication.Services;
 using ToDoApplication.Services.Interfaces;
 
@@ -14,6 +15,17 @@ builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ToDoAppDatabase")));
+
+
+// User Identity
+builder.Services.AddIdentityCore<User>(options =>
+{
+    options.Password.RequiredLength = 8;
+}).AddEntityFrameworkStores<ToDoApplicationDbContext>();
+
+
+
+
 
 var app = builder.Build();
 
