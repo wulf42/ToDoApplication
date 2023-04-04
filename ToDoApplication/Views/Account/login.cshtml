@@ -1,0 +1,9 @@
+﻿@model ToDoApplication.Models.Login
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary();
+    <label>Login:</label> @Html.TextBoxFor(x=>x.UserName)
+    <label>Password:</label> @Html.PasswordFor(x=>x.Password)
+    <button type="submit">Log in</button>
+}
