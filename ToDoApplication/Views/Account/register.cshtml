@@ -1,0 +1,9 @@
+﻿@model ToDoApplication.Models.Register
+
+@using(Html.BeginForm("Register","Account",FormMethod.Post)){
+    @Html.ValidationSummary();
+    <label>Login:</label> @Html.TextBoxFor(x=>x.UserName)
+    <label>Email:</label> @Html.TextBoxFor(x=>x.Email)
+    <label>Password:</label> @Html.PasswordFor(x=>x.Password)
+    <button type="submit">Register</button>
+}
