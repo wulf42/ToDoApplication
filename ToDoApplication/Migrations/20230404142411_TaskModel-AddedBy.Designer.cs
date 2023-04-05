@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToDoApplication.Context;
@@ -11,9 +12,11 @@ using ToDoApplication.Context;
 namespace ToDoApplication.Migrations
 {
     [DbContext(typeof(ToDoApplicationDbContext))]
-    partial class ToDoApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230404142411_TaskModel-AddedBy")]
+    partial class TaskModelAddedBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,8 +184,8 @@ namespace ToDoApplication.Migrations
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time without time zone");
 
-                    b.Property<string>("addedBy")
-                        .HasColumnType("text");
+                    b.Property<Guid>("addedBy")
+                        .HasColumnType("uuid");
 
                     b.HasKey("TaskId");
 
