@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Context;
 using ToDoApplication.Models;
@@ -9,16 +10,25 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+
 // Dependency injection
 builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ToDoAppDatabase")));
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
+});
 
 
 // User Identity
-builder.Services.AddIdentityCore<User>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 8;
 }).AddEntityFrameworkStores<ToDoApplicationDbContext>();
@@ -42,7 +52,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
