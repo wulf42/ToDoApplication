@@ -36,9 +36,22 @@ namespace ToDoApplication.Controllers
                 return View(userLoginData);
             }
 
-            await _signInManager.PasswordSignInAsync(userLoginData.UserName, userLoginData.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(userLoginData.UserName, userLoginData.Password, false, false);
 
-            return RedirectToAction("Index", "TaskToDo");
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByNameAsync(userLoginData.UserName);
+                var userId = user.Id;
+                HttpContext.Session.SetString("UserId", userId);
+
+                return RedirectToAction("Index", "TaskToDo");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(userLoginData);
+            }
+
         }
 
         [HttpPost]
@@ -64,8 +77,5 @@ namespace ToDoApplication.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "TaskToDo");
         }
-
-
-
     }
 }

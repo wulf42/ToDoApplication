@@ -7,10 +7,12 @@ namespace ToDoApplication.Services
     public class TaskToDoService : ITaskToDoService
     {
         private readonly ToDoApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TaskToDoService(ToDoApplicationDbContext context)
+        public TaskToDoService(ToDoApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public TaskToDo Get(int id)
@@ -22,7 +24,10 @@ namespace ToDoApplication.Services
 
         public List<TaskToDo> GetAll()
         {
-            var tasksToDoList = _context.TasksToDo.ToList();
+            var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
+
+            var tasksToDoList = _context.TasksToDo.Where(t => t.addedBy == userId).ToList();
+
 
             return tasksToDoList;
         }

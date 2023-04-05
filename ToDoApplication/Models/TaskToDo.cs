@@ -18,6 +18,7 @@ namespace ToDoApplication.Models
         public Category Category { get; set; }
 
         public Status Status { get; set; }
+        public string? addedBy { get; set; }
     }
 
     public enum Category
