@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="~/ToDoApplication.styles.css" asp-append-version="true" />
     @*Boostrap icons*@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    @*Calendar*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+
+
 </head>
 <body>
     <header>
@@ -28,8 +32,12 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Calendar" asp-action="Index">Calendar</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Logout</a>
                             </li>
+
                         }
                         @*Guest nav: Login, Register*@
                         else
