@@ -52,3 +52,10 @@ body {
     margin: 0 auto;
     justify-content: center;
 }
+.fc-event-title {
+    white-space: normal !important;
+    align-items: normal !important;
+}
+.fc-event-time{
+    min-width:35px;
+}
