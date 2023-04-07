@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Services.Interfaces;
 
 
@@ -12,6 +13,8 @@ namespace ToDoApplication.Controllers
         {
             _calendarService = calendarService;
         }
+
+        [Authorize]
         public IActionResult Index()
         {
             var calendarEvents = _calendarService.GetCalendarEvents();
