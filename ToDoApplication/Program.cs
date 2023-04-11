@@ -14,6 +14,7 @@ builder.Services.AddControllersWithViews();
 
 // Dependency injection
 builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
+builder.Services.AddScoped<ICalendarService, CalendarService>();
 
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
