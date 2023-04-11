@@ -1,0 +1,10 @@
+﻿@model ToDoApplication.Models.WeatherApiResponse
+
+<div>
+    <h1>Weather Information</h1>
+    <p>Latitude: @Model.latitude</p>
+    <p>Longitude: @Model.longitude</p>
+</div>
+
+<partial name="_weather" model="@Model" />
+
