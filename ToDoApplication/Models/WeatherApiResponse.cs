@@ -16,10 +16,10 @@
 
     public class Hourly_Units
     {
-        public string time { get; set; }
-        public string temperature_2m { get; set; }
-        public string rain { get; set; }
-        public string snowfall { get; set; }
+        public string? time { get; set; }
+        public string? temperature_2m { get; set; }
+        public string? rain { get; set; }
+        public string? snowfall { get; set; }
     }
 
     public class Hourly

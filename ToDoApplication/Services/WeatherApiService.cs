@@ -21,27 +21,33 @@ namespace ToDoApplication.Services
 
             var url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,rain,snowfall&start_date={date}&end_date={date}&timezone=Europe%2FBerlin";
             var web = new WebClient();
+            try
+            {
+                var response = web.DownloadString(url);
 
-            var response = web.DownloadString(url);
+                var deserializedClass = JsonConvert.DeserializeObject<WeatherApiResponse>(response);
 
-            var deserializedClass = JsonConvert.DeserializeObject<WeatherApiResponse>(response);
+                var dateAndTime = date + "T" + time;
 
-            var dateAndTime = date + "T" + time;
+                //Find index of date and time in hourly array
+                var index = Array.IndexOf(deserializedClass.hourly.time, dateAndTime);
 
-            //Find index of date and time in hourly array
-            var index = Array.IndexOf(deserializedClass.hourly.time, dateAndTime);
-
-            var temperature = deserializedClass.hourly.temperature_2m[index];
-            var rain = deserializedClass.hourly.rain[index];
-            var snow = deserializedClass.hourly.snowfall[index];
-            var timeOutput = deserializedClass.hourly.time[index];
-            deserializedClass.hourly.time = new string[] { timeOutput };
-            deserializedClass.hourly.temperature_2m = new float[] { temperature };
-            deserializedClass.hourly.rain = new float[] { rain };
-            deserializedClass.hourly.snowfall = new float[] { snow };
+                var temperature = deserializedClass.hourly.temperature_2m[index];
+                var rain = deserializedClass.hourly.rain[index];
+                var snow = deserializedClass.hourly.snowfall[index];
+                var timeOutput = deserializedClass.hourly.time[index];
+                deserializedClass.hourly.time = new string[] { timeOutput };
+                deserializedClass.hourly.temperature_2m = new float[] { temperature };
+                deserializedClass.hourly.rain = new float[] { rain };
+                deserializedClass.hourly.snowfall = new float[] { snow };
 
 
-            return deserializedClass;
+                return deserializedClass;
+            }
+            catch (Exception e)
+            {
+                return new WeatherApiResponse();
+            }
         }
     }
 }
