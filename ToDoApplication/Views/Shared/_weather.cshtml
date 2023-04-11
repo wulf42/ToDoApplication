@@ -1,0 +1,40 @@
+﻿<h1>Wheater</h1>
+<table>
+    <tr>
+        <th>Temperature</th>
+        <th>Rain</th>
+        <th>Snowfall</th>
+    </tr>
+    <tr>
+
+    <tr>
+        <td>@Model.hourly.temperature_2m[0]</td>
+        <td>
+                @{
+                    if (@Model.hourly.rain[0] == 0)
+                    {
+                    <p>no rainfall</p>
+                    }
+                    else
+                    {
+                    <p>expected rainfall</p>
+                    }
+                }
+        </td>
+        <td>
+                @{
+                    if (@Model.hourly.snowfall[0] == 0)
+                    {
+                    <p>no snowfall</p>
+                    }
+                    else
+                    {
+                    <p>expected snowfall</p>
+                    }
+                }
+        </td>
+
+    </tr>
+
+    </tr>
+</table>
