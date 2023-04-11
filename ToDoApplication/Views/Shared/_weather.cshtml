@@ -1,40 +1,37 @@
-﻿<h1>Wheater</h1>
-<table>
-    <tr>
+﻿<h1>Weather</h1>
+<table class="table table-bordered">
+    <tr class="table-primary">
         <th>Temperature</th>
         <th>Rain</th>
         <th>Snowfall</th>
     </tr>
-    <tr>
 
-    <tr>
+    <tr class="table-light">
         <td>@Model.hourly.temperature_2m[0]</td>
         <td>
-                @{
-                    if (@Model.hourly.rain[0] == 0)
-                    {
+            @{
+                if (@Model.hourly.rain[0] == 0)
+                {
                     <p>no rainfall</p>
-                    }
-                    else
-                    {
-                    <p>expected rainfall</p>
-                    }
                 }
+                else
+                {
+                    <p>expected rainfall</p>
+                }
+            }
         </td>
         <td>
-                @{
-                    if (@Model.hourly.snowfall[0] == 0)
-                    {
+            @{
+                if (@Model.hourly.snowfall[0] == 0)
+                {
                     <p>no snowfall</p>
-                    }
-                    else
-                    {
-                    <p>expected snowfall</p>
-                    }
                 }
+                else
+                {
+                    <p>expected snowfall</p>
+                }
+            }
         </td>
-
-    </tr>
 
     </tr>
 </table>

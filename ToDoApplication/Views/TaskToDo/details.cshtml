@@ -17,7 +17,7 @@
     DateOnly inputDate = @Model.Date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
     TimeOnly inputTime = @Model.Time;
-    string outputTime = inputTime.ToString("HH"+":00");
+    string outputTime = inputTime.ToString("HH" + ":00");
 }
 
 <a href="@Url.Action("Index","WeatherApi",new {location="olsztyn",date=outputDate, time=outputTime})" class="text-reset text-decoration-none"><b>Weather</b></a>

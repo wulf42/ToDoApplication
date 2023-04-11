@@ -1,6 +1,4 @@
-﻿
-
-using ToDoApplication.Models;
+﻿using ToDoApplication.Models;
 
 namespace ToDoApplication.Services.Interfaces
 {
