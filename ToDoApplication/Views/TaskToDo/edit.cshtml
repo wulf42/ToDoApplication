@@ -56,7 +56,7 @@
                 @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
             </div>
             <div class="col">
-                @Html.TextBoxFor(x => outputDate, new { @type = "date" , @class = "form-control" })
+                @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})
             </div><div class="col">
                 @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
             </div><div class="col">
