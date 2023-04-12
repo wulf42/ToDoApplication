@@ -33,6 +33,10 @@
                 Text = $"{GetCategoryEmoji(c)} {c.ToString()}"
             });
 
+
+         
+    DateOnly inputDate = @Model.Date;
+    string outputDate = inputDate.ToString("yyyy-MM-dd");
 }
 
 <div class="AddTaskContainer">
@@ -52,7 +56,7 @@
                 @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
             </div>
             <div class="col">
-                @Html.TextBoxFor(x => x.Date, new { @type = "date" , @class = "form-control" })
+                @Html.TextBoxFor(x => outputDate, new { @type = "date" , @class = "form-control" })
             </div><div class="col">
                 @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
             </div><div class="col">
