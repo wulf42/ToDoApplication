@@ -57,7 +57,7 @@ namespace ToDoApplication.Services
                 taskToUpdate.Name = body.Name;
                 taskToUpdate.Description = body.Description;
                 taskToUpdate.Category = body.Category;
-                taskToUpdate.Status = body.Status;
+                //taskToUpdate.Status = body.Status;
                 taskToUpdate.Date = body.Date;
                 taskToUpdate.Time = body.Time;
             }
