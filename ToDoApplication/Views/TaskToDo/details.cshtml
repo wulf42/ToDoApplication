@@ -20,4 +20,23 @@
     string outputTime = inputTime.ToString("HH" + ":00");
 }
 
-<a href="@Url.Action("Index","WeatherApi",new {location="olsztyn",date=outputDate, time=outputTime})" class="text-reset text-decoration-none"><b>Weather</b></a>
+
+@using (Html.BeginForm("Index", "WeatherApi", FormMethod.Get))
+{
+    @Html.Hidden("date", outputDate)
+    @Html.Hidden("time", outputTime)
+    <div class="form-group">
+        @Html.Label("location", "Location:", new { @class = "col-sm-3 col-form-label px-0" })
+        <div class="col-sm-4 px-0">
+            @Html.TextBox("location", "", new { @class = "form-control form-control-sm" })
+        </div>
+        <div class="col-sm-3 px-0">
+            <button type="button" class="btn btn-secondary btn-sm" id="location-btn">Use my location</button>
+            <button type="submit" class="btn btn-primary btn-sm"><b>Weather</b></button>
+        </div>
+    </div>    
+}
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdwkDGJIILpflUYeX4sLihwDFLgBr0_Yk"></script>
+<script src="~/js/weatherGetLocation.js" asp-append-version="true"></script>
