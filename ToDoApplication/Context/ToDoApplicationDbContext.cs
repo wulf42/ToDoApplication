@@ -16,6 +16,11 @@ namespace ToDoApplication.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Models.TaskToDo>()
+                .HasMany(x => x.shoppingLists)
+                .WithOne(x => x.TaskToDo)
+                .HasForeignKey(x => x.TaskToDoId);
         }
     }
 }
