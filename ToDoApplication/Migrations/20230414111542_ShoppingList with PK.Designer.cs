@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToDoApplication.Context;
@@ -11,9 +12,11 @@ using ToDoApplication.Context;
 namespace ToDoApplication.Migrations
 {
     [DbContext(typeof(ToDoApplicationDbContext))]
-    partial class ToDoApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230414111542_ShoppingList with PK")]
+    partial class ShoppingListwithPK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
