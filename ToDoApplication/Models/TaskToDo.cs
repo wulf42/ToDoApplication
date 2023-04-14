@@ -19,7 +19,7 @@ namespace ToDoApplication.Models
         public Category Category { get; set; }
 
         public Status Status { get; set; }
-        public List<ShoppingList>? shoppingLists { get; set; }
+        public List<ShoppingProduct>? shoppingLists { get; set; }
         public string? addedBy { get; set; }
     }
 
@@ -33,9 +33,9 @@ namespace ToDoApplication.Models
         ToDo, InProgress, Done
     }
 
-    public class ShoppingList
+    public class ShoppingProduct
     {
-        public int productId { get; set; }        
+        public int productId { get; set; }
         public string name { get; set; }
         public int quantity { get; set; }
 
