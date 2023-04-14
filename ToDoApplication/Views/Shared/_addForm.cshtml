@@ -2,8 +2,48 @@
 
 <div class="AddTaskContainer">
 
+    @{
+
+        string GetCategoryEmoji(Category category)
+        {
+            switch (category)
+            {
+                case Category.DeepWork:
+                    return "\U0001F4DD";
+                case Category.ShallowWork:
+                    return "\U0001F4DA";
+                case Category.Chores:
+                    return "\U0001F9F9";
+                case Category.Learning:
+                    return "\U0001F393";
+                case Category.MindCare:
+                    return "\U0001F9D0";
+                case Category.BodyCare:
+                    return "\U0001F9D6";
+                case Category.People:
+                    return "\U0001F465";
+                case Category.Other:
+                    return "\U0001F4AC";
+                default:
+                    return "";
+            }
+        }
+        var categories = Enum.GetValues(typeof(Category))
+        .Cast<Category>()
+        .Select(c => new SelectListItem
+            {
+                Value = c.ToString(),
+                Text = $"{GetCategoryEmoji(c)} {c.ToString()}"
+            });
+
+    }
+
+
+    
+    
     @using (Html.BeginForm("Add", "TaskToDo", FormMethod.Post))
     {
+
         @Html.ValidationSummary()
         <div class="row">
             <div class="col">
@@ -13,8 +53,7 @@
                 @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
             </div>
             <div class="col">
-                @Html.DropDownListFor(x => x.Category, new SelectList(Enum.GetValues(typeof(Category))),
-            "Select Category", new{ @class = "form-control" })
+                @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
             </div>
             <div class="col">
                 @Html.TextBoxFor(x => x.Date, new { @type = "date" , @class = "form-control" })
