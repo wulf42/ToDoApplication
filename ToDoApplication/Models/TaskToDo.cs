@@ -35,6 +35,7 @@ namespace ToDoApplication.Models
 
     public class ShoppingProduct
     {
+        [Key]
         public int productId { get; set; }
         public string name { get; set; }
         public int quantity { get; set; }
