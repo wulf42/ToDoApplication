@@ -41,31 +41,96 @@
     }
 
 
-    
-    
     @using (Html.BeginForm("Add", "TaskToDo", FormMethod.Post))
-    {
+{
+    @Html.ValidationSummary()
 
-        @Html.ValidationSummary()
+    <div class="row">
+        <div class="col">
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder="Name"})
+        </div>
+        <div class="col">
+            @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
+        </div>
+        <div class="col">
+            @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
+        </div>
+        <div class="col">
+            @Html.TextBoxFor(x => x.Date, new { @type = "date" , @class = "form-control" })
+        </div>
+        <div class="col">
+            @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-success">Add Task</button>
+        </div>
+    </div>
+
+    <div id="shoppingListSection" style="display: none;">
+        <hr />
+        <h4>Shopping List</h4>
         <div class="row">
             <div class="col">
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder="Name"})
-            </div>
-            <div class="col">
-                @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
-            </div>
-            <div class="col">
-                @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
-            </div>
-            <div class="col">
-                @Html.TextBoxFor(x => x.Date, new { @type = "date" , @class = "form-control" })
-            </div><div class="col">
-                @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
-            </div><div class="col">
-                <button type="submit" class="btn btn-success">Dodaj taska</button>
+                <button type="button" id="addProductButton" class="btn btn-success">Add Product</button>
             </div>
         </div>
-    }
+        <div id="productList">
+        </div>
+    </div>
+}
+
+<script>
+  window.addEventListener('load', function () {
+    var category = document.getElementById('Category');
+    category.addEventListener('change', function () {
+                var shoppingListForm = document.getElementById('shoppingListSection');
+      if (category.value === 'ShoppingList') {
+        shoppingListForm.style.display = 'block';
+      } else {
+        shoppingListForm.style.display = 'none';
+      }
+    });
+            var addProductButton = document.getElementById('addProductButton');
+            var productList = document.getElementById('productList');
+            var productIndex = 0;
+
+            addProductButton.addEventListener('click', function () {
+                var productName = document.createElement('input');
+                productName.setAttribute('type', 'text');
+                productName.setAttribute('class', 'form-control');
+                productName.setAttribute('name', 'shoppingLists[' + productIndex + '].name');
+                productName.setAttribute('placeholder', 'Product Name');
+
+                var productQuantity = document.createElement('input');
+                productQuantity.setAttribute('type', 'text');
+                productQuantity.setAttribute('class', 'form-control');
+                productQuantity.setAttribute('name', 'shoppingLists[' + productIndex + '].quantity');
+                productQuantity.setAttribute('placeholder', 'Quantity');
+
+                var removeProductButton = document.createElement('button');
+                removeProductButton.setAttribute('type', 'button');
+                removeProductButton.setAttribute('class', 'btn btn-danger');
+                removeProductButton.innerHTML = 'Usuń produkt';
+                removeProductButton.addEventListener('click', function () {
+                    productList.removeChild(productContainer);
+                });
+
+                var productContainer = document.createElement('div');
+                productContainer.setAttribute('class', 'row mb-2');
+                productContainer.appendChild(productName);
+                productContainer.appendChild(productQuantity);
+                productContainer.appendChild(removeProductButton);
+
+                productList.appendChild(productContainer);
+
+                productIndex++;
+            });
+
+  });
+</script>
+
+    
+   
 
 </div>
 
