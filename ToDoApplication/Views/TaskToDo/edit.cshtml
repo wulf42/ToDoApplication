@@ -1,4 +1,4 @@
-﻿@model ToDoApplication.Models.TaskToDo
+﻿@model ToDoApplication.ViewModels.TaskDetailsViewModel
 @{
 
     string GetCategoryEmoji(Category category)
@@ -36,8 +36,8 @@
             });
 
 
-         
-    DateOnly inputDate = @Model.Date;
+
+    DateOnly inputDate = @Model.TaskToDo.Date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
 }
 
@@ -48,23 +48,53 @@
         @Html.ValidationSummary()
         <div classs="row">
             <div class="col">
-                @Html.HiddenFor(x => x.TaskId)
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder="Name"})
+                @Html.HiddenFor(x => x.TaskToDo.TaskId)
+                @Html.TextBoxFor(x => x.TaskToDo.Name, new { @class = "form-control", @placeholder="Name"})
             </div>
             <div class="col">
-                @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
+                @Html.TextBoxFor(x => x.TaskToDo.Description, new { @class = "form-control", @placeholder="Description"})
             </div>
             <div class="col">
-                @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.TaskToDo.Category, categories, "Select Category", new { @class = "form-control" })
             </div>
             <div class="col">
-                @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})
+                @Html.TextBoxFor(x => x.TaskToDo.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})
             </div><div class="col">
-                @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
-            </div><div class="col">
+                @Html.TextBoxFor(x => x.TaskToDo.Time, new { @type = "time" , @class = "form-control" })
+            </div>
+
+
+
+            @if (Model.TaskToDo.shoppingLists != null)
+            {
+                <h3>Shopping Products</h3>
+                for (int i = 0; i < Model.ShoppingProducts.Count; i++)
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.ShoppingProducts[i].productId)
+                        <div class="row">
+                            <div class="col">
+                                @Html.LabelFor(x => x.ShoppingProducts[i].name)
+                                @Html.TextBoxFor(x => x.ShoppingProducts[i].name, new { @class = "form-control", @placeholder="Name", @style="width: 70%; display: inline-block" })
+                            </div>
+                            <div class="col">
+                                @Html.LabelFor(x => x.ShoppingProducts[i].quantity)
+                                @Html.TextBoxFor(x => x.ShoppingProducts[i].quantity, new { @class = "form-control", @type="number", @placeholder="Quantity", @style="width: 25%; display: inline-block; margin-left: 10px" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+
+
+            <div class="col">
                 <button type="submit" class="btn btn-success">Edytuj taska</button>
             </div>
         </div>
+
+
     }
 
 </div>
