@@ -1,6 +1,7 @@
 ﻿using ToDoApplication.Context;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Services
 {
@@ -15,11 +16,22 @@ namespace ToDoApplication.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public TaskToDo Get(int id)
+        public TaskDetailsViewModel Get(int id)
         {
             var taskToDo = _context.TasksToDo.Find(id);
+            var shoppingProducts = _context.ShoppingProducts
+            .Where(x => x.TaskToDoId == id)
+            .ToList();
 
-            return taskToDo;
+
+            var viewModel = new TaskDetailsViewModel
+            {
+                TaskToDo = taskToDo,
+                ShoppingProducts = shoppingProducts
+            };
+
+
+            return viewModel;
         }
 
         public List<TaskToDo> GetAll()
@@ -48,27 +60,49 @@ namespace ToDoApplication.Services
             return taskToDo.TaskId;
         }
 
-        public int Edit(int id, TaskToDo body)
+        public int Edit(int id, TaskDetailsViewModel body)
         {
             var taskToUpdate = _context.TasksToDo.Find(id);
             //Edit task form data
-            if (body.TaskId != 0)
+            if (body.TaskToDo.TaskId != 0)
             {
-                taskToUpdate.Name = body.Name;
-                taskToUpdate.Description = body.Description;
-                taskToUpdate.Category = body.Category;
+                taskToUpdate.Name = body.TaskToDo.Name;
+                taskToUpdate.Description = body.TaskToDo.Description;
+                taskToUpdate.Category = body.TaskToDo.Category;
                 //taskToUpdate.Status = body.Status;
-                taskToUpdate.Date = body.Date;
-                taskToUpdate.Time = body.Time;
+                taskToUpdate.Date = body.TaskToDo.Date;
+                taskToUpdate.Time = body.TaskToDo.Time;
             }
             //Move to next category (passed only int id, TaskToDo body is empty)
-            if (body.TaskId == 0)
+            if (body.TaskToDo.TaskId == 0)
             {
-                taskToUpdate.Status = body.Status;
+                taskToUpdate.Status = body.TaskToDo.Status;
             }
+
+            foreach (var shoppingProduct in body.ShoppingProducts)
+            {
+                Edit(shoppingProduct.productId, shoppingProduct);
+            }
+
             _context.TasksToDo.Update(taskToUpdate);
             _context.SaveChanges();
             return taskToUpdate.TaskId;
         }
+
+        public int Edit(int shoppingProductId, ShoppingProduct body)
+        {
+            //funkcja edytująca produkt z listy zakupów
+            var shoppingProduct = _context.ShoppingProducts.Find(shoppingProductId);
+ 
+            shoppingProduct.name = body.name;
+            shoppingProduct.quantity = body.quantity;
+
+            _context.SaveChanges();
+            return shoppingProduct.productId;
+        }
+
+
+
+
     }
 }

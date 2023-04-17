@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Controllers
 {
@@ -49,10 +50,10 @@ namespace ToDoApplication.Controllers
 
         public IActionResult Add(TaskToDo body)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Index");   //WiP - Add validation
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return RedirectToAction("Index");   //WiP - Add validation
+            //}
             body.addedBy = HttpContext.Session.GetString("UserId");
 
             if (body.addedBy == null)
@@ -74,7 +75,7 @@ namespace ToDoApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, TaskToDo body)
+        public IActionResult Edit(int id, TaskDetailsViewModel body)
         {
             _taskToDoService.Edit(id, body);
             return RedirectToAction("Index");
