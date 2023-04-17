@@ -64,7 +64,7 @@ namespace ToDoApplication.Services
         {
             var taskToUpdate = _context.TasksToDo.Find(id);
             //Edit task form data
-            if (body.TaskToDo.TaskId != 0)
+            if (body.TaskToDo != null && body.TaskToDo.TaskId != 0)
             {
                 taskToUpdate.Name = body.TaskToDo.Name;
                 taskToUpdate.Description = body.TaskToDo.Description;
@@ -78,12 +78,13 @@ namespace ToDoApplication.Services
             {
                 taskToUpdate.Status = body.TaskToDo.Status;
             }
-
-            foreach (var shoppingProduct in body.ShoppingProducts)
+            if (body.TaskToDo != null && body.TaskToDo.shoppingLists != null)
             {
-                Edit(shoppingProduct.productId, shoppingProduct);
+                foreach (var shoppingProduct in body.ShoppingProducts)
+                {
+                    Edit(shoppingProduct.productId, shoppingProduct);
+                }
             }
-
             _context.TasksToDo.Update(taskToUpdate);
             _context.SaveChanges();
             return taskToUpdate.TaskId;
@@ -93,7 +94,7 @@ namespace ToDoApplication.Services
         {
             //funkcja edytująca produkt z listy zakupów
             var shoppingProduct = _context.ShoppingProducts.Find(shoppingProductId);
- 
+
             shoppingProduct.name = body.name;
             shoppingProduct.quantity = body.quantity;
 
