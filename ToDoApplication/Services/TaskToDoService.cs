@@ -9,11 +9,14 @@ namespace ToDoApplication.Services
     {
         private readonly ToDoApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IShoppingProductService _shoppingProductService;
 
-        public TaskToDoService(ToDoApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+
+        public TaskToDoService(ToDoApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IShoppingProductService shoppingProductService)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+            _shoppingProductService = shoppingProductService;
         }
 
         public TaskDetailsViewModel Get(int id)
@@ -78,32 +81,16 @@ namespace ToDoApplication.Services
             {
                 taskToUpdate.Status = body.TaskToDo.Status;
             }
-            if (body.TaskToDo != null && body.TaskToDo.shoppingLists != null)
+            if (body.TaskToDo != null && body.ShoppingProducts.Count>0)
             {
                 foreach (var shoppingProduct in body.ShoppingProducts)
                 {
-                    Edit(shoppingProduct.productId, shoppingProduct);
+                    _shoppingProductService.Edit(shoppingProduct.productId, shoppingProduct);
                 }
             }
             _context.TasksToDo.Update(taskToUpdate);
             _context.SaveChanges();
             return taskToUpdate.TaskId;
         }
-
-        public int Edit(int shoppingProductId, ShoppingProduct body)
-        {
-            //funkcja edytująca produkt z listy zakupów
-            var shoppingProduct = _context.ShoppingProducts.Find(shoppingProductId);
-
-            shoppingProduct.name = body.name;
-            shoppingProduct.quantity = body.quantity;
-
-            _context.SaveChanges();
-            return shoppingProduct.productId;
-        }
-
-
-
-
     }
 }
