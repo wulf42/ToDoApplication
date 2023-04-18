@@ -58,6 +58,12 @@ namespace ToDoApplication.Services
         public int Delete(int id)
         {
             var taskToDo = _context.TasksToDo.Find(id);
+
+            //remove all shopping products related to task
+            var shoppingProducts = _context.ShoppingProducts.Where(sp => sp.TaskToDoId == taskToDo.TaskId);
+            _context.ShoppingProducts.RemoveRange(shoppingProducts);
+
+            //remove task
             _context.TasksToDo.Remove(taskToDo);
             _context.SaveChanges();
             return taskToDo.TaskId;
@@ -77,11 +83,11 @@ namespace ToDoApplication.Services
                 taskToUpdate.Time = body.TaskToDo.Time;
             }
             //Move to next category (passed only int id, TaskToDo body is empty)
-            if (body.TaskToDo.TaskId == 0)
+            if (body.TaskToDo == null )
             {
-                taskToUpdate.Status = body.TaskToDo.Status;
+                taskToUpdate.Status +=1;
             }
-            if (body.TaskToDo != null && body.ShoppingProducts.Count>0)
+            if (body.TaskToDo != null && body.ShoppingProducts!=null && body.ShoppingProducts.Count>0)
             {
                 foreach (var shoppingProduct in body.ShoppingProducts)
                 {

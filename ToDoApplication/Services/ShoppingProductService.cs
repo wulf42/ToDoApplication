@@ -11,7 +11,15 @@ namespace ToDoApplication.Services
         {
             _context = context;
         }
-    
+
+        public int Save(ShoppingProduct body)
+        {
+            
+            _context.ShoppingProducts.Add(body);
+            _context.SaveChanges();
+            return body.productId;
+        }
+
         public int Edit(int shoppingProductId, ShoppingProduct body)
         {
             //funkcja edytująca produkt z listy zakupów
