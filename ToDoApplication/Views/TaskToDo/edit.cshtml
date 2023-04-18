@@ -41,12 +41,11 @@
     string outputDate = inputDate.ToString("yyyy-MM-dd");
 }
 
-<div class="AddTaskContainer">
-
-    @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
-    {
-        @Html.ValidationSummary()
-        <div classs="row">
+<div class="ShoppingProductContainer">
+    <div classs="row">
+        @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
             <div class="col">
                 @Html.HiddenFor(x => x.TaskToDo.TaskId)
                 @Html.TextBoxFor(x => x.TaskToDo.Name, new { @class = "form-control", @placeholder="Name"})
@@ -59,11 +58,10 @@
             </div>
             <div class="col">
                 @Html.TextBoxFor(x => x.TaskToDo.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})
-            </div><div class="col">
+            </div>
+            <div class="col">
                 @Html.TextBoxFor(x => x.TaskToDo.Time, new { @type = "time" , @class = "form-control" })
             </div>
-
-
 
             @if (Model.TaskToDo.shoppingLists != null)
             {
@@ -85,16 +83,22 @@
                     </div>
                 }
             }
-
-
-
-
             <div class="col">
                 <button type="submit" class="btn btn-success">Edytuj taska</button>
+                @if (Model.TaskToDo.Category == Category.ShoppingList)
+                {
+
+                    <button type="button" onclick="location.href='@Url.Action("Save", "ShoppingProduct", new {taskId = @Model.TaskToDo.TaskId})'" class="btn btn-info">Add Shopping Product</button>
+
+                }
             </div>
-        </div>
+ 
 
+        }
 
-    }
-
+    </div>
 </div>
+
+
+
+
