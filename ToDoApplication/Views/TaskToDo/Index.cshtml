@@ -32,7 +32,6 @@
                                 @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
-                                    <input type="hidden" name="Status" value="@Status.InProgress" />
                                     <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-arrow-right-circle"></i></button>
                                 }
                             </div>
@@ -65,7 +64,6 @@
                                 @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
-                                    <input type="hidden" name="Status" value="@Status.Done" />
                                     <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-arrow-right-circle"></i></button>
                                 }
                             </div>
