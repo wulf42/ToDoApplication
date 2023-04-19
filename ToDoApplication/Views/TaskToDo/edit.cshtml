@@ -79,6 +79,13 @@
                                 @Html.LabelFor(x => x.ShoppingProducts[i].quantity)
                                 @Html.TextBoxFor(x => x.ShoppingProducts[i].quantity, new { @class = "form-control", @type="number", @placeholder="Quantity", @style="width: 25%; display: inline-block; margin-left: 10px" })
                             </div>
+                            <div class="col">
+                                @using (Html.BeginForm("Delete", "ShoppingProduct", FormMethod.Post))
+                                {
+                                    @Html.Hidden("productId", Model.ShoppingProducts[i].productId)
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
@@ -92,7 +99,7 @@
 
                 }
             </div>
- 
+
 
         }
 
