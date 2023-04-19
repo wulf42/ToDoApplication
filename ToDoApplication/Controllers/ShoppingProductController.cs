@@ -25,7 +25,7 @@ namespace ToDoApplication.Controllers
         {
             var model = new ShoppingProduct();
             model.TaskToDoId = taskId;
-            return View(model);
+            return PartialView("_addShoppingProduct", model);
         }
 
         [HttpPost]

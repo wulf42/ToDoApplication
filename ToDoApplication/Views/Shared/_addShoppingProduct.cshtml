@@ -1,0 +1,37 @@
+﻿@model ToDoApplication.Models.ShoppingProduct
+
+@using (Html.BeginForm("Save", "ShoppingProduct", FormMethod.Post, new { id = "addProductForm" }))
+{
+    @Html.HiddenFor(x=>x.TaskToDoId)
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.quantity, new { @class = "form-control", type = "number", @value = "1" })
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <button type="button" onclick="submitForm()" class="btn btn-primary"><i class="bi bi-plus"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+}
+
+<script>
+    function submitForm() {
+        document.getElementById("addProductForm").submit();
+    }
+</script>
