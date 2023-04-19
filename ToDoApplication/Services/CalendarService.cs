@@ -47,6 +47,9 @@ namespace ToDoApplication.Services
                     case Category.People:
                         color = "#fd7e14"; // pomarańczowy
                         break;
+                    case Category.ShoppingList:
+                        color = "#ffc0cb"; // różowy
+                        break;
                     default:
                         color = "#6c757d"; // szary
                         break;

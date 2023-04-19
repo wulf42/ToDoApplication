@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToDoApplication.Context;
@@ -11,9 +12,11 @@ using ToDoApplication.Context;
 namespace ToDoApplication.Migrations
 {
     [DbContext(typeof(ToDoApplicationDbContext))]
-    partial class ToDoApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230414111542_ShoppingList with PK")]
+    partial class ShoppingListwithPK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,7 @@ namespace ToDoApplication.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("productId"));
 
-                    b.Property<int?>("TaskToDoId")
+                    b.Property<int>("TaskToDoId")
                         .HasColumnType("integer");
 
                     b.Property<string>("name")
@@ -176,7 +179,7 @@ namespace ToDoApplication.Migrations
 
                     b.HasIndex("TaskToDoId");
 
-                    b.ToTable("ShoppingProducts");
+                    b.ToTable("ShoppingProduct");
                 });
 
             modelBuilder.Entity("ToDoApplication.Models.TaskToDo", b =>
@@ -333,7 +336,9 @@ namespace ToDoApplication.Migrations
                 {
                     b.HasOne("ToDoApplication.Models.TaskToDo", "TaskToDo")
                         .WithMany("shoppingLists")
-                        .HasForeignKey("TaskToDoId");
+                        .HasForeignKey("TaskToDoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TaskToDo");
                 });

@@ -13,7 +13,12 @@ namespace ToDoApplication.Services
         {
 
             var locationService = new GoogleLocationService(apikey: API_KEY);
+            if(location == null)
+            {
+                location = "Warsaw";
+            }
             var point = locationService.GetLatLongFromAddress(location);
+
             var latitude = Math.Round(point.Latitude, 2).ToString();
             var longitude = Math.Round(point.Longitude, 2).ToString();
             latitude = latitude.Replace(",", ".");

@@ -1,4 +1,4 @@
-﻿@model ToDoApplication.Models.TaskToDo
+﻿@model ToDoApplication.ViewModels.TaskDetailsViewModel
 @{
 
     string GetCategoryEmoji(Category category)
@@ -19,6 +19,8 @@
                 return "\U0001F9D6";
             case Category.People:
                 return "\U0001F465";
+            case Category.ShoppingList:
+                return "\U0001F6D2";
             case Category.Other:
                 return "\U0001F4AC";
             default:
@@ -34,35 +36,100 @@
             });
 
 
-         
-    DateOnly inputDate = @Model.Date;
+
+    DateOnly inputDate = @Model.TaskToDo.Date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
 }
 
-<div class="AddTaskContainer">
+<div class="ShoppingProductContainer">
+    <div classs="row">
+        @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.HiddenFor(x => x.TaskToDo.TaskId)
+                    <tr>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.Name, new { @class = "form-control", @placeholder="Name"})</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.Description, new { @class = "form-control", @placeholder="Description"})</td>
+                        <td>@Html.DropDownListFor(x => x.TaskToDo.Category, categories, "Select Category", new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.Time, new { @type = "time" , @class = "form-control" })</td>
+                    </tr>
+                </tbody>
+            </table>
 
-    @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
-    {
-        @Html.ValidationSummary()
-        <div classs="row">
+            @if (Model.TaskToDo.shoppingLists != null)
+            {
+                <h4>Shopping Products</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ShoppingProducts.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(x => x.ShoppingProducts[i].productId)
+                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].name, new { @class = "form-control", @placeholder="Name" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].quantity, new { @class = "form-control", @type="number", @placeholder="Quantity" })
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm("Delete", "ShoppingProduct", FormMethod.Post))
+                                    {
+                                        @Html.Hidden("productId", Model.ShoppingProducts[i].productId)
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <div id="add-product-container"></div>
             <div class="col">
-                @Html.HiddenFor(x => x.TaskId)
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder="Name"})
-            </div>
-            <div class="col">
-                @Html.TextBoxFor(x => x.Description, new { @class = "form-control", @placeholder="Description"})
-            </div>
-            <div class="col">
-                @Html.DropDownListFor(x => x.Category, categories, "Select Category", new { @class = "form-control" })
-            </div>
-            <div class="col">
-                @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})
-            </div><div class="col">
-                @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
-            </div><div class="col">
                 <button type="submit" class="btn btn-success">Edytuj taska</button>
-            </div>
-        </div>
-    }
+                @if (Model.TaskToDo.Category == Category.ShoppingList)
+                {
+                    <button type="button" id="add-product-btn" class="btn btn-info">Add Shopping Product</button>
 
+                }
+            </div>
+        }
+
+
+
+
+    </div>
 </div>
+@section scripts {
+    <script>
+        $(function () {
+            $('#add-product-btn').click(function () {
+                var taskId = '@Model.TaskToDo.TaskId';
+                $.get('@Url.Action("Save", "ShoppingProduct")', { taskId: taskId }, function (data) {
+                    $('#add-product-container').html(data);
+                });
+            });
+        });
+    </script>
+}
+
+
+

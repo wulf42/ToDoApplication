@@ -1,22 +1,32 @@
-﻿@using System.Globalization;
-@model dynamic
+﻿@model ToDoApplication.ViewModels.TaskDetailsViewModel
+
 @{
     ViewData["Title"] = "details";
 }
 
 <h1>Task</h1>
-<p>Nazwa: @Model.Name</p>
-<p>Opis: @Model.Description</p>
-<p>Czas: @Model.Time</p>
-<p>Data: @Model.Date</p>
-<p>Categoria: @Model.Category</p>
-<p>Status: @Model.Status</p>
-
+<p>Nazwa: @Model.TaskToDo.Name</p>
+<p>Opis: @Model.TaskToDo.Description</p>
+<p>Czas: @Model.TaskToDo.Time</p>
+<p>Data: @Model.TaskToDo.Date</p>
+<p>Categoria: @Model.TaskToDo.Category</p>
+<p>Status: @Model.TaskToDo.Status</p>
 
 @{
-    DateOnly inputDate = @Model.Date;
+    if (Model.TaskToDo.Category == Category.ShoppingList)
+    {
+        <h2>Lista produktów:</h2>
+        @foreach (var product in Model.ShoppingProducts)
+        {
+            <li>@product.name - ilość: @product.quantity</li>
+        }
+    }
+}
+
+@{
+    DateOnly inputDate = @Model.TaskToDo.Date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
-    TimeOnly inputTime = @Model.Time;
+    TimeOnly inputTime = @Model.TaskToDo.Time;
     string outputTime = inputTime.ToString("HH" + ":00");
 }
 
@@ -34,7 +44,7 @@
             <button type="button" class="btn btn-secondary btn-sm" id="location-btn">Use my location</button>
             <button type="submit" class="btn btn-primary btn-sm"><b>Weather</b></button>
         </div>
-    </div>    
+    </div>
 }
 
 

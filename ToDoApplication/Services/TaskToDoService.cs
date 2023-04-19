@@ -1,6 +1,7 @@
 ﻿using ToDoApplication.Context;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Services
 {
@@ -8,18 +9,32 @@ namespace ToDoApplication.Services
     {
         private readonly ToDoApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IShoppingProductService _shoppingProductService;
 
-        public TaskToDoService(ToDoApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+
+        public TaskToDoService(ToDoApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IShoppingProductService shoppingProductService)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+            _shoppingProductService = shoppingProductService;
         }
 
-        public TaskToDo Get(int id)
+        public TaskDetailsViewModel Get(int id)
         {
             var taskToDo = _context.TasksToDo.Find(id);
+            var shoppingProducts = _context.ShoppingProducts
+            .Where(x => x.TaskToDoId == id)
+            .ToList();
 
-            return taskToDo;
+
+            var viewModel = new TaskDetailsViewModel
+            {
+                TaskToDo = taskToDo,
+                ShoppingProducts = shoppingProducts
+            };
+
+
+            return viewModel;
         }
 
         public List<TaskToDo> GetAll()
@@ -43,28 +58,41 @@ namespace ToDoApplication.Services
         public int Delete(int id)
         {
             var taskToDo = _context.TasksToDo.Find(id);
+
+            //remove all shopping products related to task
+            var shoppingProducts = _context.ShoppingProducts.Where(sp => sp.TaskToDoId == taskToDo.TaskId);
+            _context.ShoppingProducts.RemoveRange(shoppingProducts);
+
+            //remove task
             _context.TasksToDo.Remove(taskToDo);
             _context.SaveChanges();
             return taskToDo.TaskId;
         }
 
-        public int Edit(int id, TaskToDo body)
+        public int Edit(int id, TaskDetailsViewModel body)
         {
             var taskToUpdate = _context.TasksToDo.Find(id);
             //Edit task form data
-            if (body.TaskId != 0)
+            if (body.TaskToDo != null && body.TaskToDo.TaskId != 0)
             {
-                taskToUpdate.Name = body.Name;
-                taskToUpdate.Description = body.Description;
-                taskToUpdate.Category = body.Category;
+                taskToUpdate.Name = body.TaskToDo.Name;
+                taskToUpdate.Description = body.TaskToDo.Description;
+                taskToUpdate.Category = body.TaskToDo.Category;
                 //taskToUpdate.Status = body.Status;
-                taskToUpdate.Date = body.Date;
-                taskToUpdate.Time = body.Time;
+                taskToUpdate.Date = body.TaskToDo.Date;
+                taskToUpdate.Time = body.TaskToDo.Time;
             }
             //Move to next category (passed only int id, TaskToDo body is empty)
-            if (body.TaskId == 0)
+            if (body.TaskToDo == null )
             {
-                taskToUpdate.Status = body.Status;
+                taskToUpdate.Status +=1;
+            }
+            if (body.TaskToDo != null && body.ShoppingProducts!=null && body.ShoppingProducts.Count>0)
+            {
+                foreach (var shoppingProduct in body.ShoppingProducts)
+                {
+                    _shoppingProductService.Edit(shoppingProduct.productId, shoppingProduct);
+                }
             }
             _context.TasksToDo.Update(taskToUpdate);
             _context.SaveChanges();

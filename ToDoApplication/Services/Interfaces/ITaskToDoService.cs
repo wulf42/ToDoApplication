@@ -1,10 +1,11 @@
 ﻿using ToDoApplication.Models;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Services.Interfaces
 {
     public interface ITaskToDoService
     {
-        TaskToDo Get(int id);
+        TaskDetailsViewModel Get(int id);
 
         List<TaskToDo> GetAll();
 
@@ -12,6 +13,6 @@ namespace ToDoApplication.Services.Interfaces
 
         int Delete(int id);
 
-        int Edit(int id, TaskToDo taskToDo);
+        int Edit(int id, TaskDetailsViewModel taskToDo);
     }
 }

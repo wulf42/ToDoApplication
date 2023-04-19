@@ -12,10 +12,16 @@ namespace ToDoApplication.Context
 
         //DbSets
         public DbSet<Models.TaskToDo> TasksToDo { get; set; }
+        public DbSet<Models.ShoppingProduct> ShoppingProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Models.TaskToDo>()
+                .HasMany(x => x.shoppingLists)
+                .WithOne(x => x.TaskToDo)
+                .HasForeignKey(x => x.TaskToDoId);
         }
     }
 }

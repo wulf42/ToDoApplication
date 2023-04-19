@@ -13,9 +13,11 @@ builder.Services.AddControllersWithViews();
 
 
 // Dependency injection
+builder.Services.AddScoped<IShoppingProductService, ShoppingProductService>();
 builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IWeatherApiService, WeatherApiService>();
+
 
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
