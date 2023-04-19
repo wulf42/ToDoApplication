@@ -11,7 +11,7 @@ namespace ToDoApplication.Models
         public int quantity { get; set; }
 
         [ForeignKey("TaskToDo")]
-        public int? TaskToDoId { get; set; }
-        public TaskToDo? TaskToDo { get; set; }
+        public int TaskToDoId { get; set; }
+        public TaskToDo TaskToDo { get; set; }
     }
 }
