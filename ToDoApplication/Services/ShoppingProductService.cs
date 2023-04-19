@@ -31,5 +31,17 @@ namespace ToDoApplication.Services
             _context.SaveChanges();
             return shoppingProduct.productId;
         }
+
+        public int Delete(int productId)
+        {
+            var product = _context.ShoppingProducts.Find(productId);
+
+            //remove shopping product
+            _context.ShoppingProducts.Remove(product);
+            _context.SaveChanges();
+            return product.TaskToDoId;
+        }
+
+
     }
 }
