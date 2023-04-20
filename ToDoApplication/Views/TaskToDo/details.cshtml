@@ -4,22 +4,62 @@
     ViewData["Title"] = "details";
 }
 
-<h1>Task</h1>
-<p>Nazwa: @Model.TaskToDo.Name</p>
-<p>Opis: @Model.TaskToDo.Description</p>
-<p>Czas: @Model.TaskToDo.Time</p>
-<p>Data: @Model.TaskToDo.Date</p>
-<p>Categoria: @Model.TaskToDo.Category</p>
-<p>Status: @Model.TaskToDo.Status</p>
+
+<div class="container">
+    <table class="table table-striped">
+        <caption>Task details</caption>
+        <tbody>
+            <tr>
+                <th scope="row">Name:</th>
+                <td>@Model.TaskToDo.Name</td>
+            </tr>
+            <tr>
+                <th scope="row">Description:</th>
+                <td>@Model.TaskToDo.Description</td>
+            </tr>
+            <tr>
+                <th scope="row">Time:</th>
+                <td>@Model.TaskToDo.Time</td>
+            </tr>
+            <tr>
+                <th scope="row">Data:</th>
+                <td>@Model.TaskToDo.Date</td>
+            </tr>
+            <tr>
+                <th scope="row">Category:</th>
+                <td>@Model.TaskToDo.Category</td>
+            </tr>
+            <tr>
+                <th scope="row">Status:</th>
+                <td>@Model.TaskToDo.Status</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 @{
     if (Model.TaskToDo.Category == Category.ShoppingList)
     {
-        <h2>Lista produktów:</h2>
-        @foreach (var product in Model.ShoppingProducts)
-        {
-            <li>@product.name - ilość: @product.quantity</li>
-        }
+        <div class="container">
+            <table class="table table-striped">
+                <caption>Shopping list</caption>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.ShoppingProducts)
+                    {
+                        <tr>
+                            <td>@product.name</td>
+                            <td>@product.quantity</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 }
 
@@ -42,7 +82,7 @@
         </div>
         <div class="col-sm-3 px-0">
             <button type="button" class="btn btn-secondary btn-sm" id="location-btn">Use my location</button>
-            <button type="submit" class="btn btn-primary btn-sm"><b>Weather</b></button>
+            <button type="submit" class="btn btn-primary btn-sm"><b>Get weather</b></button>
         </div>
     </div>
 }

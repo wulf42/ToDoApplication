@@ -59,3 +59,11 @@ body {
 .fc-event-time{
     min-width:35px;
 }
+
+caption{
+caption-side: top;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 10px;
+}
