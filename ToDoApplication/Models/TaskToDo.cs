@@ -19,6 +19,7 @@ namespace ToDoApplication.Models
         public Category Category { get; set; }
 
         public Status Status { get; set; }
+        public DateOnly? LastDone { get; set; }
         public List<ShoppingProduct>? shoppingLists { get; set; }
         public string? addedBy { get; set; }
     }
@@ -30,7 +31,7 @@ namespace ToDoApplication.Models
 
     public enum Status
     {
-        ToDo, InProgress, Done
+        ToDo, InProgress, Done, Daily
     }
 
 
