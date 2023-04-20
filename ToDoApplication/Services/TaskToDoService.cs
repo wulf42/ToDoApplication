@@ -83,7 +83,7 @@ namespace ToDoApplication.Services
                 taskToUpdate.Time = body.TaskToDo.Time;
             }
             //Move to next category (passed only int id, TaskToDo body is empty)
-            if (body.TaskToDo == null )
+            if (body.TaskToDo == null && body.TaskToDo.Status != Status.Daily)
             {
                 taskToUpdate.Status +=1;
             }
@@ -93,6 +93,9 @@ namespace ToDoApplication.Services
                 {
                     _shoppingProductService.Edit(shoppingProduct.productId, shoppingProduct);
                 }
+            }
+            if(body.TaskToDo != null && body.TaskToDo.Status == Status.Daily){
+                taskToUpdate.LastDone = body.TaskToDo.LastDone;
             }
             _context.TasksToDo.Update(taskToUpdate);
             _context.SaveChanges();
