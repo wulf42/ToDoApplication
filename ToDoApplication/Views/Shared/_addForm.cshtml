@@ -61,8 +61,10 @@
         <div class="col">
             @Html.TextBoxFor(x => x.Time, new { @type = "time" , @class = "form-control" })
         </div>
-            <div class="col">
-                @Html.TextBoxFor(x => x.Status, new {  @class = "form-control" })
+            <div class="col d-flex align-items-center">
+                <label>
+                    @Html.RadioButtonFor(x => x.Status, Status.Daily) Daily
+                </label>
             </div>
         <div class="col">
             <button type="submit" class="btn btn-success">Add Task</button>
