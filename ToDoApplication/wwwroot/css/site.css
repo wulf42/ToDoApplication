@@ -45,7 +45,14 @@ body {
 .Done {
     background-color: #93BFCF;
 }
+.Daily {
+    margin-left: 5vw;
+    background-color:    #e9db94;
+}
 
+.form-check-input:checked {
+    background-color: green;
+}
 .addTaskContainer {
     width: 100%;
     display: flex;
@@ -61,9 +68,12 @@ body {
 }
 
 caption{
-caption-side: top;
+    caption-side: top;
     text-align: left;
     font-weight: bold;
     font-size: 1.5em;
     padding: 10px;
+}
+.list-group-item-warning {
+    background-color: #FAF0BE;
 }
