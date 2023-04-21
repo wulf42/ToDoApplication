@@ -83,18 +83,19 @@ namespace ToDoApplication.Services
                 taskToUpdate.Time = body.TaskToDo.Time;
             }
             //Move to next category (passed only int id, TaskToDo body is empty)
-            if (body.TaskToDo == null && body.TaskToDo.Status != Status.Daily)
+            if (body.TaskToDo == null)
             {
-                taskToUpdate.Status +=1;
+                taskToUpdate.Status += 1;
             }
-            if (body.TaskToDo != null && body.ShoppingProducts!=null && body.ShoppingProducts.Count>0)
+            if (body.TaskToDo != null && body.ShoppingProducts != null && body.ShoppingProducts.Count > 0)
             {
                 foreach (var shoppingProduct in body.ShoppingProducts)
                 {
                     _shoppingProductService.Edit(shoppingProduct.productId, shoppingProduct);
                 }
             }
-            if(body.TaskToDo != null && body.TaskToDo.Status == Status.Daily){
+            if (body.TaskToDo != null && body.TaskToDo.Status == Status.Daily)
+            {
                 taskToUpdate.LastDone = body.TaskToDo.LastDone;
             }
             _context.TasksToDo.Update(taskToUpdate);
