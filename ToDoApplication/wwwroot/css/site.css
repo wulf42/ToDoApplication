@@ -32,21 +32,19 @@ body {
     height: 60vh;
     text-align: center;
     width: 100%;
+    padding: 2em;
 }
 
 .ToDo {
-    background-color: #93BFCF;
-    padding: 2em;
+    background-color: #93BFCF;  
 }
 
 .Inprogress {
-    background-color: #BDCDD6;
-    padding: 2em;
+    background-color: #BDCDD6;   
 }
 
 .Done {
-    background-color: #93BFCF;
-    padding: 2em;
+    background-color: #93BFCF;   
 }
 
 
@@ -55,11 +53,10 @@ body {
 
 .Daily {
     height: 55.5vh;
-    min-width: 25em;
     margin-left: 1em;
-    padding: 2em;
     background: #e9db94;
     position: relative;
+
 }
 
     .Daily:after {
@@ -114,4 +111,9 @@ caption {
 
 .list-group-item-warning {
     background-color: #FAF0BE;
+}
+.list-group {
+    overflow:auto;
+    height:90%;
+    width:100%;
 }
