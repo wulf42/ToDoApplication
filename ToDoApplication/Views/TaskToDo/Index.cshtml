@@ -8,7 +8,7 @@
 <h1>Task</h1>
 
 <div class="TaskContainer">
-    <div class="Task ToDo">
+    <div class="Task ToDo ">
         <h2>To Do</h2>
         <ul class="list-group">
 
@@ -18,17 +18,20 @@
                 {
                     <li class="list-group-item list-group-item-info">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6  w-100">
                                 <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
-                            </div> <div class="col-md-auto">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-auto text-center">
                                 <a href="@Url.Action("Edit","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><button class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></button></a>
-                            </div>  <div class="col-md-auto">
+                            </div>  <div class="col-md-auto text-center">
                                 @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                                 }
-                            </div>  <div class="col-md-auto">
+                            </div>  <div class="col-md-auto text-center">
                                 @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
@@ -36,6 +39,7 @@
                                 }
                             </div>
                         </div>
+
                     </li>
                 }
             }
@@ -50,17 +54,20 @@
                 {
                     <li class="list-group-item list-group-item-info">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6  w-100">
                                 <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
-                            </div> <div class="col-md-auto">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-auto text-center">
                                 <a href="@Url.Action("Edit","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><button class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></button></a>
-                            </div>  <div class="col-md-auto">
+                            </div>  <div class="col-md-auto text-center">
                                 @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
                                     <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                                 }
-                            </div>  <div class="col-md-auto">
+                            </div>  <div class="col-md-auto text-center">
                                 @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />
@@ -82,11 +89,80 @@
                 {
                     <li class="list-group-item list-group-item-info">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6  w-100">
                                 <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
-                            </div> <div class="col-md-auto">
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-auto text-center ">
+                                    <a href="@Url.Action("Edit","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><button class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></button></a>
+                                </div>  <div class="col-md-auto text-center">
+                                    @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="id" value="@task.TaskId" />
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="Task Daily">
+        <h2>Daily</h2>
+        <ul class="list-group">
+            @foreach (var task in Model)
+            {
+                if (task.Status.Equals(Status.Daily))
+                {
+                    <li class="list-group-item list-group-item-warning">
+                        <div class="row align-items-center">
+                            <div class="col-md-auto">
+                                <form asp-action="Edit" asp-controller="TaskToDo" method="post" id="edit-form-@task.TaskId">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="task-@task.TaskId" name="task-@task.TaskId"
+                                        @if (task.Status == Status.Daily && (task.LastDone == null || task.LastDone != DateOnly.FromDateTime(DateTime.Today)))
+                                        {
+                                            <text>unchecked</text>
+                                        }
+                                        else
+                                        {
+                                            <text>checked</text>
+                                        }
+                                        onchange="document.getElementById('edit-form-@task.TaskId').submit();"
+                                        form="edit-form-@task.TaskId">
+                                        <label class="form-check-label ml-2" for="task-@task.TaskId">
+                                            @if (task.LastDone != DateOnly.FromDateTime(DateTime.Today))
+                                            {
+                                                <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><b>@task.Name</b></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Details","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><s><b>@task.Name</b></s></a>
+                                            }
+                                        </label>
+                                    </div>
+                                    <input type="hidden" name="id" value="@task.TaskId" form="edit-form-@task.TaskId" />
+                                    <input type="hidden" name="body.TaskToDo.Status" value="@Status.Daily" form="edit-form-@task.TaskId" />
+                                    @if (task.LastDone != DateOnly.FromDateTime(DateTime.Today))
+                                    {
+                                        <input type="hidden" name="body.TaskToDo.LastDone" value="@DateOnly.FromDateTime(DateTime.Today)" form="edit-form-@task.TaskId" />
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" name="body.TaskToDo.LastDone" value="@DateOnly.FromDateTime(DateTime.Today.AddDays(-1))" form="edit-form-@task.TaskId" />
+                                    }
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+        
+                            <div class="col-md-auto text-center">
                                 <a href="@Url.Action("Edit","TaskToDo",new {id=task.TaskId})" class="text-reset text-decoration-none"><button class="btn btn-primary btn-sm"><i class="bi bi-pen"></i></button></a>
-                            </div>  <div class="col-md-auto">
+                            </div>
+                            <div class="col-md-auto text-center">
                                 @using (Html.BeginForm("Delete", "TaskToDo", FormMethod.Post))
                                 {
                                     <input type="hidden" name="id" value="@task.TaskId" />

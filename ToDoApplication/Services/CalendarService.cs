@@ -54,19 +54,24 @@ namespace ToDoApplication.Services
                         color = "#6c757d"; // szary
                         break;
                 }
+
                 var calendarEvent = new CustomCalendarEvent
                 {
                     id = task.TaskId,
                     title = task.Name,
                     start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second),
                     end = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second).AddHours(1),
-
                     backgroundColor = color,
                     borderColor = color,
-
-
-
                 };
+                if (task.Status == Status.Daily)
+                {
+                    calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second);
+                    calendarEvent.startTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second);
+                    calendarEvent.endTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second).AddHours(1);
+                    calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+
+                }
 
                 events.Add(calendarEvent);
             }
@@ -84,6 +89,11 @@ namespace ToDoApplication.Services
             public string borderColor { get; set; }
 
             public string display = "block";
+
+            public TimeOnly? startTime;
+            public TimeOnly? endTime;
+            public int[]? dow;
+
 
         }
     }

@@ -32,18 +32,57 @@ body {
     height: 60vh;
     text-align: center;
     width: 100%;
+    padding: 2em;
 }
 
 .ToDo {
-    background-color: #93BFCF;
+    background-color: #93BFCF;  
 }
 
 .Inprogress {
-    background-color: #BDCDD6;
+    background-color: #BDCDD6;   
 }
 
 .Done {
-    background-color: #93BFCF;
+    background-color: #93BFCF;   
+}
+
+
+
+
+
+.Daily {
+    height: 55.5vh;
+    margin-left: 1em;
+    background: #e9db94;
+    position: relative;
+
+}
+
+    .Daily:after {
+        content: "";
+        position: absolute;
+        bottom: -2em;
+        left: 0;
+        right: 2em;
+        border-width: 1em;
+        border-style: solid;
+        border-color: #e9db94;
+    }
+
+    .Daily:before {
+        content: "";
+        position: absolute;
+        bottom: -2em;
+        right: 0;
+        border-width: 2em 2em 0 0;
+        border-style: solid;
+        border-color: #d7c981 transparent;
+    }
+
+
+.form-check-input:checked {
+    background-color: green;
 }
 
 .addTaskContainer {
@@ -52,10 +91,29 @@ body {
     margin: 0 auto;
     justify-content: center;
 }
+
 .fc-event-title {
     white-space: normal !important;
     align-items: normal !important;
 }
-.fc-event-time{
-    min-width:35px;
+
+.fc-event-time {
+    min-width: 35px;
+}
+
+caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+.list-group-item-warning {
+    background-color: #FAF0BE;
+}
+.list-group {
+    overflow:auto;
+    height:90%;
+    width:100%;
 }
