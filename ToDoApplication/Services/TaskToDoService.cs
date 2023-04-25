@@ -41,8 +41,11 @@ namespace ToDoApplication.Services
         {
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
 
-            var tasksToDoList = _context.TasksToDo.Where(t => t.addedBy == userId).ToList();
-
+            var tasksToDoList = _context.TasksToDo
+                .Where(t => t.addedBy == userId)
+                .OrderBy(t => t.Date)
+                .ThenBy(t => t.Time)
+                .ToList();
 
             return tasksToDoList;
         }
@@ -60,7 +63,8 @@ namespace ToDoApplication.Services
             var taskToDo = _context.TasksToDo.Find(id);
 
             //remove all shopping products related to task
-            var shoppingProducts = _context.ShoppingProducts.Where(sp => sp.TaskToDoId == taskToDo.TaskId);
+            var shoppingProducts = _context.ShoppingProducts
+                .Where(sp => sp.TaskToDoId == taskToDo.TaskId);
             _context.ShoppingProducts.RemoveRange(shoppingProducts);
 
             //remove task
@@ -78,7 +82,6 @@ namespace ToDoApplication.Services
                 taskToUpdate.Name = body.TaskToDo.Name;
                 taskToUpdate.Description = body.TaskToDo.Description;
                 taskToUpdate.Category = body.TaskToDo.Category;
-                //taskToUpdate.Status = body.Status;
                 taskToUpdate.Date = body.TaskToDo.Date;
                 taskToUpdate.Time = body.TaskToDo.Time;
             }
