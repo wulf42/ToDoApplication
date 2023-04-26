@@ -17,6 +17,7 @@ builder.Services.AddScoped<IShoppingProductService, ShoppingProductService>();
 builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IWeatherApiService, WeatherApiService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 // Register dbcontext
