@@ -13,7 +13,7 @@ namespace ToDoApplication.Services
         {
 
             var locationService = new GoogleLocationService(apikey: API_KEY);
-            if(location == null)
+            if (location == null)
             {
                 location = "Warsaw";
             }

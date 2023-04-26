@@ -14,7 +14,6 @@ namespace ToDoApplication.Services
             _signInManager = signInManager;
         }
 
-
         public async Task<SignInResult> Login(Login userLoginData)
         {
             var userName = userLoginData.UserName;
@@ -34,9 +33,6 @@ namespace ToDoApplication.Services
 
             return result;
         }
-
-
-
         public async Task<IdentityResult> Register(Register userRegisterData)
         {
             var newUser = new User
@@ -48,7 +44,6 @@ namespace ToDoApplication.Services
             var result = await _userManager.CreateAsync(newUser, userRegisterData.Password);
             return result;
         }
-
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
