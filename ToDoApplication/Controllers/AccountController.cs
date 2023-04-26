@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Models;
+using ToDoApplication.Services.Interfaces;
 
 namespace ToDoApplication.Controllers
 {
@@ -8,10 +9,12 @@ namespace ToDoApplication.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IAccountService _accountService;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAccountService accountService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _accountService = accountService;
         }
 
 
@@ -36,23 +39,30 @@ namespace ToDoApplication.Controllers
                 return View(userLoginData);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(userLoginData.UserName, userLoginData.Password, false, false);
+            var result = await _accountService.Login(userLoginData);
 
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(userLoginData.UserName);
-                var userId = user.Id;
-                HttpContext.Session.SetString("UserId", userId);
+                HttpContext.Session.SetString("UserId", user.Id);
 
                 return RedirectToAction("Index", "TaskToDo");
             }
             else
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Email not confirmed.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                }
+
                 return View(userLoginData);
             }
-
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Register(Register userRegisterData)
@@ -62,19 +72,27 @@ namespace ToDoApplication.Controllers
                 return View(userRegisterData);
             }
 
-            var newUser = new User
-            {
-                UserName = userRegisterData.UserName,
-                Email = userRegisterData.Email,
-            };
+            var result = await _accountService.Register(userRegisterData);
 
-            await _userManager.CreateAsync(newUser, userRegisterData.Password);
-            return RedirectToAction("Index", "TaskToDo");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "TaskToDo");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(userRegisterData);
+            }
         }
 
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
+            HttpContext.Session.Remove("UserId");
+            await _accountService.LogOut();
             return RedirectToAction("Index", "TaskToDo");
         }
     }
