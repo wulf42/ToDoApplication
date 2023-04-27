@@ -95,5 +95,12 @@ namespace ToDoApplication.Controllers
             await _accountService.LogOut();
             return RedirectToAction("Index", "TaskToDo");
         }
+
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            await _accountService.ConfirmEmail(userId, token);
+            return RedirectToAction("Index", "TaskToDo");
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EmailApp.Model;
+using EmailApp.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Web;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
 
@@ -8,10 +11,12 @@ namespace ToDoApplication.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IEmailService _emailService;
+        public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         public async Task<SignInResult> Login(Login userLoginData)
@@ -41,12 +46,42 @@ namespace ToDoApplication.Services
                 Email = userRegisterData.Email,
             };
 
+
+
+
             var result = await _userManager.CreateAsync(newUser, userRegisterData.Password);
+
+            if (result.Succeeded)
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    Mail confirmEmailMail = new Mail();
+                    confirmEmailMail.from = "ToDoApp@localhost.com";
+                    confirmEmailMail.to = userRegisterData.Email;
+                    confirmEmailMail.subject = "ToDoApp Email Confirmation";
+                    confirmEmailMail.message = "Please confirm your email by clicking on the link below: \n" +
+                                               "https://localhost:44300/Account/ConfirmEmail?userId=" +
+                                               HttpUtility.UrlEncode(newUser.Id) +
+                                               "&token=" + token;
+
+                    //Send email confirmation
+                    _emailService.SendEmail(confirmEmailMail);
+                }
+
+            }
+
             return result;
         }
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
+        }
+        public async Task<IdentityResult> ConfirmEmail(string userId, string token)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return result;
         }
     }
 }

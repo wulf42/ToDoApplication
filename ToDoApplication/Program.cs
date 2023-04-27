@@ -1,3 +1,5 @@
+using EmailApp.Services;
+using EmailApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Context;
@@ -19,6 +21,8 @@ builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IWeatherApiService, WeatherApiService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 // Register dbcontext
 builder.Services.AddDbContext<ToDoApplicationDbContext>(options =>
@@ -36,7 +40,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 8;
-}).AddEntityFrameworkStores<ToDoApplicationDbContext>();
+
+}).AddEntityFrameworkStores<ToDoApplicationDbContext>().AddDefaultTokenProviders();
 
 
 

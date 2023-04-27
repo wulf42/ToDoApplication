@@ -8,5 +8,6 @@ namespace ToDoApplication.Services.Interfaces
         Task<SignInResult> Login(Login userLoginData);
         Task<IdentityResult> Register(Register userRegisterData);
         Task LogOut();
+        Task<IdentityResult> ConfirmEmail(string userId, string token);
     }
 }
