@@ -5,7 +5,6 @@ using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
 
-
 namespace EmailApp.Services
 {
     public class EmailService : IEmailService
