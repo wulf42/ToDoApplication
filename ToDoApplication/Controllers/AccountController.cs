@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
@@ -96,11 +97,12 @@ namespace ToDoApplication.Controllers
             return RedirectToAction("Index", "TaskToDo");
         }
 
-
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             await _accountService.ConfirmEmail(userId, token);
             return RedirectToAction("Index", "TaskToDo");
         }
+
     }
 }

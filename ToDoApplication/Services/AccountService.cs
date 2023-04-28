@@ -53,7 +53,9 @@ namespace ToDoApplication.Services
 
             if (result.Succeeded)
             {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                string encodedToken = Uri.EscapeDataString(token);
+
                 if (!string.IsNullOrEmpty(token))
                 {
                     Mail confirmEmailMail = new Mail();
@@ -63,7 +65,7 @@ namespace ToDoApplication.Services
                     confirmEmailMail.message = "Please confirm your email by clicking on the link below: \n" +
                                                "https://localhost:44300/Account/ConfirmEmail?userId=" +
                                                HttpUtility.UrlEncode(newUser.Id) +
-                                               "&token=" + token;
+                                               "&token=" + encodedToken;
 
                     //Send email confirmation
                     _emailService.SendEmail(confirmEmailMail);
@@ -79,8 +81,9 @@ namespace ToDoApplication.Services
         }
         public async Task<IdentityResult> ConfirmEmail(string userId, string token)
         {
+            string decodedToken = Uri.UnescapeDataString(token);
             var user = await _userManager.FindByIdAsync(userId);
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
             return result;
         }
     }
