@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ToDoApplication.Models;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Services.Interfaces
 {
@@ -9,5 +10,7 @@ namespace ToDoApplication.Services.Interfaces
         Task<IdentityResult> Register(Register userRegisterData);
         Task LogOut();
         Task<IdentityResult> ConfirmEmail(string userId, string token);
+        Task<bool> ForgotPassword(string email);
+        Task<IdentityResult> ResetPassword(ChangePasswordViewModel body);
     }
 }

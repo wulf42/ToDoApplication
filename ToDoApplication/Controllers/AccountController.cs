@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
+using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Controllers
 {
@@ -18,8 +19,6 @@ namespace ToDoApplication.Controllers
             _accountService = accountService;
         }
 
-
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -30,6 +29,38 @@ namespace ToDoApplication.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel body)
+        {
+
+            var user = await _userManager.FindByEmailAsync(body.Email);
+            if (user != null)
+            {
+                var userId = await _userManager.GetUserIdAsync(user);
+
+                var model = new ChangePasswordViewModel
+                {
+                    Token = body.Token,
+                    UserId = userId
+                };
+                return View(model);
+            }
+            return View();
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            HttpContext.Session.Remove("UserId");
+            await _accountService.LogOut();
+            return RedirectToAction("Index", "TaskToDo");
+        }
+
 
 
         [HttpPost]
@@ -64,7 +95,6 @@ namespace ToDoApplication.Controllers
             }
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Register(Register userRegisterData)
         {
@@ -90,13 +120,6 @@ namespace ToDoApplication.Controllers
             }
         }
 
-        public async Task<IActionResult> LogOut()
-        {
-            HttpContext.Session.Remove("UserId");
-            await _accountService.LogOut();
-            return RedirectToAction("Index", "TaskToDo");
-        }
-
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -104,5 +127,30 @@ namespace ToDoApplication.Controllers
             return RedirectToAction("Index", "TaskToDo");
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            await _accountService.ForgotPassword(email);
+            return RedirectToAction("Login", "Account");
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ChangePasswordViewModel body)
+        {
+            var result = await _accountService.ResetPassword(body);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(body);
+        }
     }
 }
