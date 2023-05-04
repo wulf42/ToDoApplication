@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Models;
-using ToDoApplication.Services;
 using ToDoApplication.Services.Interfaces;
 
 namespace ToDoApplication.Controllers
@@ -38,7 +36,7 @@ namespace ToDoApplication.Controllers
         [HttpPost]
         public IActionResult Delete(int productId)
         {
-            var taskId=_shoppingProductService.Delete(productId);
+            var taskId = _shoppingProductService.Delete(productId);
             return RedirectToAction("Edit", "TaskToDo", new { id = taskId });
         }
 
