@@ -6,4 +6,6 @@
     <label>Login:</label> @Html.TextBoxFor(x=>x.UserName)
     <label>Password:</label> @Html.PasswordFor(x=>x.Password)
     <button type="submit" class="btn btn-success">Log in</button>
+    
+    @Html.ActionLink("Forgot Password?", "ForgotPassword", "Account")
 }
