@@ -35,7 +35,7 @@ namespace ToDoApplication.Services
             var shoppingProductViewModels = _mapper.Map<List<ShoppingProductViewModel>>(shoppingProducts);
 
             var taskToDoViewModel = _mapper.Map<TaskToDoViewModel>(taskToDo);
-            taskToDoViewModel.shoppingProducts = shoppingProductViewModels;
+            taskToDoViewModel.ShoppingProducts = shoppingProductViewModels;
 
             var viewModel = new TaskDetailsViewModel
             {
@@ -93,18 +93,18 @@ namespace ToDoApplication.Services
 
         private void EditTaskFormData(TaskToDo task, TaskToDoViewModel taskViewModel)
         {
-            if (taskViewModel != null && taskViewModel.taskId != 0)
+            if (taskViewModel != null && taskViewModel.TaskId != 0)
             {
-                task.Name = taskViewModel.name;
-                task.Description = taskViewModel.description;
-                task.Category = taskViewModel.category;
-                task.Date = taskViewModel.date;
-                task.Time = taskViewModel.time;
+                task.Name = taskViewModel.Name;
+                task.Description = taskViewModel.Description;
+                task.Category = taskViewModel.Category;
+                task.Date = taskViewModel.Date;
+                task.Time = taskViewModel.Time;
             }
 
-            if (taskViewModel != null && taskViewModel.status == Status.Daily)
+            if (taskViewModel != null && taskViewModel.Status == Status.Daily)
             {
-                task.LastDone = taskViewModel.lastDone;
+                task.LastDone = taskViewModel.LastDone;
             }
         }
 
@@ -126,7 +126,7 @@ namespace ToDoApplication.Services
                     shoppingProduct.TaskToDoId = task.TaskId;
                     shoppingProduct.TaskToDo = task;
 
-                    _shoppingProductService.Edit(shoppingProduct.productId, shoppingProduct);
+                    _shoppingProductService.Edit(shoppingProduct.ProductId, shoppingProduct);
                 }
             }
         }

@@ -9,14 +9,14 @@ namespace ToDoApplication.MappingProfiles
         public ShoppingProductMappingProfile()
         {
             CreateMap<ShoppingProduct, ShoppingProductViewModel>()
-                .ForMember(dest => dest.productId, opt => opt.MapFrom(src => src.productId))
-                .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.name))
-                .ForMember(dest => dest.quantity, opt => opt.MapFrom(src => src.quantity));
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
 
             CreateMap<ShoppingProductViewModel, ShoppingProduct>()
-                .ForMember(dest => dest.productId, opt => opt.MapFrom(src => src.productId))
-                .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.name))
-                .ForMember(dest => dest.quantity, opt => opt.MapFrom(src => src.quantity));
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
         }
     }
 }

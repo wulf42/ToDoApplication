@@ -17,7 +17,7 @@ namespace ToDoApplication.Services
         {
             _context.ShoppingProducts.Add(product);
             _context.SaveChanges();
-            return product.productId;
+            return product.ProductId;
         }
 
         public int Edit(int shoppingProductId, ShoppingProduct updatedProduct)
@@ -26,11 +26,11 @@ namespace ToDoApplication.Services
             var existingProduct = _context.ShoppingProducts.Find(shoppingProductId);
             if (existingProduct != null)
             {
-                existingProduct.name = updatedProduct.name;
-                existingProduct.quantity = updatedProduct.quantity;
+                existingProduct.Name = updatedProduct.Name;
+                existingProduct.Quantity = updatedProduct.Quantity;
 
                 _context.SaveChanges();
-                return existingProduct.productId;
+                return existingProduct.ProductId;
             }
 
             return -1;
@@ -45,7 +45,7 @@ namespace ToDoApplication.Services
             {
                 _context.ShoppingProducts.Remove(product);
                 _context.SaveChanges();
-                return product.productId;
+                return product.ProductId;
             }
             return -1;
         }

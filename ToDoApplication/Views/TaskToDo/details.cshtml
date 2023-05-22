@@ -11,34 +11,34 @@
         <tbody>
             <tr>
                 <th scope="row">Name:</th>
-                <td>@Model.TaskToDo.name</td>
+                <td>@Model.TaskToDo.Name</td>
             </tr>
             <tr>
                 <th scope="row">Description:</th>
-                <td>@Model.TaskToDo.description</td>
+                <td>@Model.TaskToDo.Description</td>
             </tr>
             <tr>
                 <th scope="row">Time:</th>
-                <td>@Model.TaskToDo.time</td>
+                <td>@Model.TaskToDo.Time</td>
             </tr>
             <tr>
                 <th scope="row">Data:</th>
-                <td>@Model.TaskToDo.date</td>
+                <td>@Model.TaskToDo.Date</td>
             </tr>
             <tr>
                 <th scope="row">Category:</th>
-                <td>@Model.TaskToDo.category</td>
+                <td>@Model.TaskToDo.Category</td>
             </tr>
             <tr>
                 <th scope="row">Status:</th>
-                <td>@Model.TaskToDo.status</td>
+                <td>@Model.TaskToDo.Status</td>
             </tr>
         </tbody>
     </table>
 </div>
 
 @{
-    if (Model.TaskToDo.category == Category.ShoppingList)
+    if (Model.TaskToDo.Category == Category.ShoppingList)
     {
         <div class="container">
             <table class="table table-striped">
@@ -53,8 +53,8 @@
                     @foreach (var product in Model.ShoppingProducts)
                     {
                         <tr>
-                            <td>@product.name</td>
-                            <td>@product.quantity</td>
+                            <td>@product.Name</td>
+                            <td>@product.Quantity</td>
                         </tr>
                     }
                 </tbody>
@@ -64,9 +64,9 @@
 }
 
 @{
-    DateOnly inputDate = @Model.TaskToDo.date;
+    DateOnly inputDate = @Model.TaskToDo.Date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
-    TimeOnly inputTime = @Model.TaskToDo.time;
+    TimeOnly inputTime = @Model.TaskToDo.Time;
     string outputTime = inputTime.ToString("HH" + ":00");
 }
 

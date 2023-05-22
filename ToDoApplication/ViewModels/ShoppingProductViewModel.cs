@@ -2,11 +2,11 @@
 {
     public class ShoppingProductViewModel
     {
-        public int productId { get; set; }
+        public int ProductId { get; set; }
 
-        public string name { get; set; }
-        public int quantity { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
 
-        public int taskToDoId { get; set; }
+        public int TaskToDoId { get; set; }
     }
 }
