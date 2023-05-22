@@ -37,7 +37,7 @@
 
 
 
-    DateOnly inputDate = @Model.TaskToDo.Date;
+    DateOnly inputDate = @Model.TaskToDo.date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
 }
 
@@ -57,18 +57,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @Html.HiddenFor(x => x.TaskToDo.TaskId)
+                    @Html.HiddenFor(x => x.TaskToDo.taskId)
                     <tr>
-                        <td>@Html.TextBoxFor(x => x.TaskToDo.Name, new { @class = "form-control", @placeholder="Name"})</td>
-                        <td>@Html.TextBoxFor(x => x.TaskToDo.Description, new { @class = "form-control", @placeholder="Description"})</td>
-                        <td>@Html.DropDownListFor(x => x.TaskToDo.Category, categories, "Select Category", new { @class = "form-control" })</td>
-                        <td>@Html.TextBoxFor(x => x.TaskToDo.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})</td>
-                        <td>@Html.TextBoxFor(x => x.TaskToDo.Time, new { @type = "time" , @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.name, new { @class = "form-control", @placeholder="Name"})</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.description, new { @class = "form-control", @placeholder="Description"})</td>
+                        <td>@Html.DropDownListFor(x => x.TaskToDo.category, categories, "Select Category", new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control"})</td>
+                        <td>@Html.TextBoxFor(x => x.TaskToDo.time, new { @type = "time" , @class = "form-control" })</td>
                     </tr>
                 </tbody>
             </table>
 
-            @if (Model.TaskToDo.shoppingLists != null)
+            @if (Model.TaskToDo.shoppingProducts != null)
             {
                 <h4>Shopping Products</h4>
                 <table class="table table-striped">
@@ -105,7 +105,7 @@
             <div id="add-product-container"></div>
             <div class="col">
                 <button type="submit" class="btn btn-success">Edytuj taska</button>
-                @if (Model.TaskToDo.Category == Category.ShoppingList)
+                @if (Model.TaskToDo.category == Category.ShoppingList)
                 {
                     <button type="button" id="add-product-btn" class="btn btn-info">Add Shopping Product</button>
 
@@ -122,7 +122,7 @@
     <script>
         $(function () {
             $('#add-product-btn').click(function () {
-                var taskId = '@Model.TaskToDo.TaskId';
+                var taskId = '@Model.TaskToDo.taskId';
                 $.get('@Url.Action("Save", "ShoppingProduct")', { taskId: taskId }, function (data) {
                     $('#add-product-container').html(data);
                 });

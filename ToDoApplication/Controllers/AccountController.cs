@@ -12,6 +12,7 @@ namespace ToDoApplication.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAccountService _accountService;
+
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAccountService accountService)
         {
             _userManager = userManager;
@@ -24,20 +25,22 @@ namespace ToDoApplication.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult ForgotPassword()
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel body)
         {
-
             var user = await _userManager.FindByEmailAsync(body.Email);
             if (user != null)
             {
@@ -51,8 +54,8 @@ namespace ToDoApplication.Controllers
                 return View(model);
             }
             return View();
-
         }
+
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
@@ -60,8 +63,6 @@ namespace ToDoApplication.Controllers
             await _accountService.LogOut();
             return RedirectToAction("Index", "TaskToDo");
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> Login(Login userLoginData)

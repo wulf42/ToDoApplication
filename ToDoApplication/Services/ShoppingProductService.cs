@@ -7,6 +7,7 @@ namespace ToDoApplication.Services
     public class ShoppingProductService : IShoppingProductService
     {
         private readonly ToDoApplicationDbContext _context;
+
         public ShoppingProductService(ToDoApplicationDbContext context)
         {
             _context = context;
@@ -14,7 +15,6 @@ namespace ToDoApplication.Services
 
         public int Save(ShoppingProduct body)
         {
-
             _context.ShoppingProducts.Add(body);
             _context.SaveChanges();
             return body.productId;
@@ -41,7 +41,5 @@ namespace ToDoApplication.Services
             _context.SaveChanges();
             return product.TaskToDoId;
         }
-
-
     }
 }

@@ -13,6 +13,7 @@ namespace ToDoApplication.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailService _emailService;
+
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IEmailService emailService)
         {
             _userManager = userManager;
@@ -39,6 +40,7 @@ namespace ToDoApplication.Services
 
             return result;
         }
+
         public async Task<IdentityResult> Register(Register userRegisterData)
         {
             var newUser = new User
@@ -46,9 +48,6 @@ namespace ToDoApplication.Services
                 UserName = userRegisterData.UserName,
                 Email = userRegisterData.Email,
             };
-
-
-
 
             var result = await _userManager.CreateAsync(newUser, userRegisterData.Password);
 
@@ -69,15 +68,16 @@ namespace ToDoApplication.Services
                     //Send email confirmation
                     _emailService.SendEmail(confirmEmailMail);
                 }
-
             }
 
             return result;
         }
+
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
         }
+
         public async Task<IdentityResult> ConfirmEmail(string userId, string token)
         {
             string decodedToken = Uri.UnescapeDataString(token);
@@ -85,6 +85,7 @@ namespace ToDoApplication.Services
             var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
             return result;
         }
+
         public async Task<bool> ForgotPassword(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -132,7 +133,5 @@ namespace ToDoApplication.Services
             var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
             return result;
         }
-
-
     }
 }

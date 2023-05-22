@@ -29,27 +29,35 @@ namespace ToDoApplication.Services
                     case Category.DeepWork:
                         color = "#dc3545"; // czerwony
                         break;
+
                     case Category.ShallowWork:
                         color = "#007bff"; // niebieski
                         break;
+
                     case Category.Chores:
                         color = "#ffc107"; // żółty
                         break;
+
                     case Category.Learning:
                         color = "#28a745"; // zielony
                         break;
+
                     case Category.MindCare:
                         color = "#6f42c1"; // fioletowy
                         break;
+
                     case Category.BodyCare:
                         color = "#17a2b8"; // turkusowy
                         break;
+
                     case Category.People:
                         color = "#fd7e14"; // pomarańczowy
                         break;
+
                     case Category.ShoppingList:
                         color = "#ffc0cb"; // różowy
                         break;
+
                     default:
                         color = "#6c757d"; // szary
                         break;
@@ -70,13 +78,13 @@ namespace ToDoApplication.Services
                     calendarEvent.startTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second);
                     calendarEvent.endTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second).AddHours(1);
                     calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-
                 }
 
                 events.Add(calendarEvent);
             }
             return events;
         }
+
         public class CustomCalendarEvent
         {
             public int id { get; set; }
@@ -93,10 +101,6 @@ namespace ToDoApplication.Services
             public TimeOnly? startTime;
             public TimeOnly? endTime;
             public int[]? dow;
-
-
         }
     }
-
 }
-

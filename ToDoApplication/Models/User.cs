@@ -4,6 +4,5 @@ namespace ToDoApplication.Models
 {
     public class User : IdentityUser
     {
-
     }
 }

@@ -9,9 +9,9 @@ namespace ToDoApplication.Services
     public class WeatherApiService : IWeatherApiService
     {
         private const string API_KEY = "AIzaSyCdwkDGJIILpflUYeX4sLihwDFLgBr0_Yk";
+
         public WeatherApiResponse Get(string location, string date, string time)
         {
-
             var locationService = new GoogleLocationService(apikey: API_KEY);
             if (location == null)
             {
@@ -45,7 +45,6 @@ namespace ToDoApplication.Services
                 deserializedClass.hourly.temperature_2m = new float[] { temperature };
                 deserializedClass.hourly.rain = new float[] { rain };
                 deserializedClass.hourly.snowfall = new float[] { snow };
-
 
                 return deserializedClass;
             }

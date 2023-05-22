@@ -11,34 +11,34 @@
         <tbody>
             <tr>
                 <th scope="row">Name:</th>
-                <td>@Model.TaskToDo.Name</td>
+                <td>@Model.TaskToDo.name</td>
             </tr>
             <tr>
                 <th scope="row">Description:</th>
-                <td>@Model.TaskToDo.Description</td>
+                <td>@Model.TaskToDo.description</td>
             </tr>
             <tr>
                 <th scope="row">Time:</th>
-                <td>@Model.TaskToDo.Time</td>
+                <td>@Model.TaskToDo.time</td>
             </tr>
             <tr>
                 <th scope="row">Data:</th>
-                <td>@Model.TaskToDo.Date</td>
+                <td>@Model.TaskToDo.date</td>
             </tr>
             <tr>
                 <th scope="row">Category:</th>
-                <td>@Model.TaskToDo.Category</td>
+                <td>@Model.TaskToDo.category</td>
             </tr>
             <tr>
                 <th scope="row">Status:</th>
-                <td>@Model.TaskToDo.Status</td>
+                <td>@Model.TaskToDo.status</td>
             </tr>
         </tbody>
     </table>
 </div>
 
 @{
-    if (Model.TaskToDo.Category == Category.ShoppingList)
+    if (Model.TaskToDo.category == Category.ShoppingList)
     {
         <div class="container">
             <table class="table table-striped">
@@ -64,9 +64,9 @@
 }
 
 @{
-    DateOnly inputDate = @Model.TaskToDo.Date;
+    DateOnly inputDate = @Model.TaskToDo.date;
     string outputDate = inputDate.ToString("yyyy-MM-dd");
-    TimeOnly inputTime = @Model.TaskToDo.Time;
+    TimeOnly inputTime = @Model.TaskToDo.time;
     string outputTime = inputTime.ToString("HH" + ":00");
 }
 

@@ -1,6 +1,5 @@
 ﻿namespace ToDoApplication.Models
 {
-
     public class WeatherApiResponse
     {
         public float latitude { get; set; }
@@ -29,5 +28,4 @@
         public float[] rain { get; set; }
         public float[] snowfall { get; set; }
     }
-
 }

@@ -1,5 +1,4 @@
-﻿
-var locationInput = document.getElementById("location");
+﻿var locationInput = document.getElementById("location");
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -38,4 +37,3 @@ function showError(error) {
 }
 
 document.getElementById("location-btn").addEventListener("click", getLocation);
-
