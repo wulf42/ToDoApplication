@@ -23,66 +23,46 @@ namespace ToDoApplication.Services
             var events = new List<CustomCalendarEvent>();
             foreach (var task in tasks)
             {
-                string color;
-                switch (task.Category)
-                {
-                    case Category.DeepWork:
-                        color = "#dc3545"; // czerwony
-                        break;
-
-                    case Category.ShallowWork:
-                        color = "#007bff"; // niebieski
-                        break;
-
-                    case Category.Chores:
-                        color = "#ffc107"; // żółty
-                        break;
-
-                    case Category.Learning:
-                        color = "#28a745"; // zielony
-                        break;
-
-                    case Category.MindCare:
-                        color = "#6f42c1"; // fioletowy
-                        break;
-
-                    case Category.BodyCare:
-                        color = "#17a2b8"; // turkusowy
-                        break;
-
-                    case Category.People:
-                        color = "#fd7e14"; // pomarańczowy
-                        break;
-
-                    case Category.ShoppingList:
-                        color = "#ffc0cb"; // różowy
-                        break;
-
-                    default:
-                        color = "#6c757d"; // szary
-                        break;
-                }
+                var color = GetCategoryColor(task.Category);
 
                 var calendarEvent = new CustomCalendarEvent
                 {
                     id = task.TaskId,
                     title = task.Name,
-                    start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second),
-                    end = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second).AddHours(1),
+                    start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan(),
+                    end = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
                     backgroundColor = color,
                     borderColor = color,
+                    startTime = task.Time,
+                    endTime = task.Time.AddHours(1),
+                    dow = task.Status == Status.Daily ? new int[] { 0, 1, 2, 3, 4, 5, 6 } : null
                 };
+
                 if (task.Status == Status.Daily)
                 {
-                    calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day, task.Time.Hour, task.Time.Minute, task.Time.Second);
-                    calendarEvent.startTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second);
-                    calendarEvent.endTime = new TimeOnly(task.Time.Hour, task.Time.Minute, task.Time.Second).AddHours(1);
-                    calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+                    calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
                 }
 
                 events.Add(calendarEvent);
             }
+
             return events;
+        }
+
+        private string GetCategoryColor(Category category)
+        {
+            return category switch
+            {
+                Category.DeepWork => "#dc3545",     // czerwony
+                Category.ShallowWork => "#007bff",  // niebieski
+                Category.Chores => "#ffc107",       // żółty
+                Category.Learning => "#28a745",     // zielony
+                Category.MindCare => "#6f42c1",     // fioletowy
+                Category.BodyCare => "#17a2b8",     // turkusowy
+                Category.People => "#fd7e14",       // pomarańczowy
+                Category.ShoppingList => "#ffc0cb", // różowy
+                _ => "#6c757d"                      // szary
+            };
         }
 
         public class CustomCalendarEvent
@@ -91,16 +71,13 @@ namespace ToDoApplication.Services
             public string title { get; set; }
             public DateTime start { get; set; }
             public DateTime end { get; set; }
-
-            public bool allDay = false;
+            public bool allDay { get; set; } = false;
             public string backgroundColor { get; set; }
             public string borderColor { get; set; }
-
-            public string display = "block";
-
-            public TimeOnly? startTime;
-            public TimeOnly? endTime;
-            public int[]? dow;
+            public string display { get; set; } = "block";
+            public TimeOnly? startTime { get; set; }
+            public TimeOnly? endTime { get; set; }
+            public int[]? dow { get; set; }
         }
     }
 }
