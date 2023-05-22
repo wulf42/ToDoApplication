@@ -20,7 +20,7 @@ namespace ToDoApplication.Controllers
         [HttpGet]
         public IActionResult Index(string location, string date, string time)
         {
-            var response = _weatherApiService.Get(location, date, time);
+            var response = _weatherApiService.GetWeather(location, date, time);
             return View(response);
         }
     }

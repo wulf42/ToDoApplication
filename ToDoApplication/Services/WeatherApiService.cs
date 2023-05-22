@@ -1,5 +1,6 @@
 ﻿using GoogleMaps.LocationServices;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Net;
 using ToDoApplication.Models;
 using ToDoApplication.Services.Interfaces;
@@ -8,7 +9,7 @@ namespace ToDoApplication.Services
 {
     public class WeatherApiService : IWeatherApiService
     {
-        private const string API_KEY = "YOUR_API_KEY"; // Zmień to na swój klucz API
+        private const string API_KEY = "AIzaSyCdwkDGJIILpflUYeX4sLihwDFLgBr0_Yk";
 
         public WeatherApiResponse GetWeather(string location, string date, string time)
         {
@@ -19,11 +20,10 @@ namespace ToDoApplication.Services
             }
             var point = locationService.GetLatLongFromAddress(location);
 
-            var latitude = Math.Round(point.Latitude, 2).ToString("F2");
-            var longitude = Math.Round(point.Longitude, 2).ToString("F2");
+            var latitude = point.Latitude.ToString("F2", CultureInfo.InvariantCulture);
+            var longitude = point.Longitude.ToString("F2", CultureInfo.InvariantCulture);
 
             var url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,rain,snowfall&start_date={date}&end_date={date}&timezone=Europe%2FBerlin";
-
             try
             {
                 using (var webClient = new WebClient())
@@ -44,7 +44,6 @@ namespace ToDoApplication.Services
                         var snow = deserializedClass.hourly.snowfall[index];
                         var timeOutput = deserializedClass.hourly.time[index];
 
-                        // Aktualizuj tablice "hourly" tylko z jednym elementem
                         deserializedClass.hourly.time = new string[] { timeOutput };
                         deserializedClass.hourly.temperature_2m = new float[] { temperature };
                         deserializedClass.hourly.rain = new float[] { rain };
@@ -54,10 +53,8 @@ namespace ToDoApplication.Services
                     return deserializedClass;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                // Tutaj można obsłużyć błąd, zalogować go lub zwrócić odpowiedź z błędem.
-                // Na przykład, można utworzyć nowy obiekt WeatherApiResponse z informacją o błędzie.
                 return new WeatherApiResponse();
             }
         }
