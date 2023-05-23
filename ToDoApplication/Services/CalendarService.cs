@@ -35,19 +35,19 @@ namespace ToDoApplication.Services
 
                 var calendarEvent = new CustomCalendarEvent
                 {
-                    id = task.TaskId,
-                    title = task.Name,
-                    start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan(),
-                    end = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
-                    backgroundColor = color,
-                    borderColor = color,
+                    Id = task.TaskId,
+                    Title = task.Name,
+                    Start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan(),
+                    End = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
+                    BackgroundColor = color,
+                    BorderColor = color,
                 };
                 if (task.Status == Status.Daily)
                 {
-                    calendarEvent.startTime = task.Time;
-                    calendarEvent.endTime = task.Time.AddHours(1);
-                    calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-                    calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
+                    calendarEvent.StartTime = task.Time;
+                    calendarEvent.EndTime = task.Time.AddHours(1);
+                    calendarEvent.Dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+                    calendarEvent.End = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
                 }
 
                 events.Add(calendarEvent);
@@ -72,19 +72,6 @@ namespace ToDoApplication.Services
             };
         }
 
-        public class CustomCalendarEvent
-        {
-            public int id { get; set; }
-            public required string title { get; set; }
-            public DateTime start { get; set; }
-            public DateTime end { get; set; }
-            public bool allDay { get; set; } = false;
-            public required string backgroundColor { get; set; }
-            public required string borderColor { get; set; }
-            public string display { get; set; } = "block";
-            public TimeOnly? startTime { get; set; }
-            public TimeOnly? endTime { get; set; }
-            public int[]? dow { get; set; }
-        }
+
     }
 }

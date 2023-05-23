@@ -1,4 +1,4 @@
-﻿using static ToDoApplication.Services.CalendarService;
+﻿using ToDoApplication.Models;
 
 namespace ToDoApplication.Services.Interfaces
 {
