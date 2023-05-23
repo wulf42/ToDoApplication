@@ -13,7 +13,9 @@ namespace ToDoApplication.Migrations
 {
     [DbContext(typeof(ToDoApplicationDbContext))]
     [Migration("20230417110647_shoppingproduct")]
+#pragma warning disable CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
     partial class shoppingproduct
+#pragma warning restore CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
