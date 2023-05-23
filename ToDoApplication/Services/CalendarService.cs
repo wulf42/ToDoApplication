@@ -71,7 +71,5 @@ namespace ToDoApplication.Services
                 _ => "#6c757d"                      // szary
             };
         }
-
-
     }
 }
