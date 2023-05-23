@@ -14,6 +14,7 @@ namespace ToDoApplication.Controllers
         {
             _taskToDoService = taskToDoService;
         }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -47,7 +48,6 @@ namespace ToDoApplication.Controllers
         }
 
         [HttpPost]
-
         public IActionResult Add(TaskToDo body)
         {
             //if (!ModelState.IsValid)
@@ -62,7 +62,6 @@ namespace ToDoApplication.Controllers
             }
 
             var id = _taskToDoService.Save(body);
-
 
             return RedirectToAction("Index");
         }

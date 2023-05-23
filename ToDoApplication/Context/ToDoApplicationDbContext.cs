@@ -12,6 +12,7 @@ namespace ToDoApplication.Context
 
         //DbSets
         public DbSet<Models.TaskToDo> TasksToDo { get; set; }
+
         public DbSet<Models.ShoppingProduct> ShoppingProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,4 +7,3 @@ namespace ToDoApplication.Services.Interfaces
         List<CustomCalendarEvent> GetCalendarEvents();
     }
 }
-

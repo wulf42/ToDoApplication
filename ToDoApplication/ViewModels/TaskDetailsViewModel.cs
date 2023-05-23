@@ -1,10 +1,8 @@
-﻿using ToDoApplication.Models;
-
-namespace ToDoApplication.ViewModels
+﻿namespace ToDoApplication.ViewModels
 {
     public class TaskDetailsViewModel
     {
-        public TaskToDo TaskToDo { get; set; }
-        public List<ShoppingProduct> ShoppingProducts { get; set; }
+        public TaskToDoViewModel TaskToDo { get; set; }
+        public List<ShoppingProductViewModel> ShoppingProducts { get; set; }
     }
 }

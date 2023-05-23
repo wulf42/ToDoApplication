@@ -7,29 +7,33 @@ namespace ToDoApplication.Services
     public class ShoppingProductService : IShoppingProductService
     {
         private readonly ToDoApplicationDbContext _context;
+
         public ShoppingProductService(ToDoApplicationDbContext context)
         {
             _context = context;
         }
 
-        public int Save(ShoppingProduct body)
+        public int Save(ShoppingProduct product)
         {
-
-            _context.ShoppingProducts.Add(body);
+            _context.ShoppingProducts.Add(product);
             _context.SaveChanges();
-            return body.productId;
+            return product.ProductId;
         }
 
-        public int Edit(int shoppingProductId, ShoppingProduct body)
+        public int Edit(int shoppingProductId, ShoppingProduct updatedProduct)
         {
             //funkcja edytująca produkt z listy zakupów
-            var shoppingProduct = _context.ShoppingProducts.Find(shoppingProductId);
+            var existingProduct = _context.ShoppingProducts.Find(shoppingProductId);
+            if (existingProduct != null)
+            {
+                existingProduct.Name = updatedProduct.Name;
+                existingProduct.Quantity = updatedProduct.Quantity;
 
-            shoppingProduct.name = body.name;
-            shoppingProduct.quantity = body.quantity;
+                _context.SaveChanges();
+                return existingProduct.ProductId;
+            }
 
-            _context.SaveChanges();
-            return shoppingProduct.productId;
+            return -1;
         }
 
         public int Delete(int productId)
@@ -37,11 +41,13 @@ namespace ToDoApplication.Services
             var product = _context.ShoppingProducts.Find(productId);
 
             //remove shopping product
-            _context.ShoppingProducts.Remove(product);
-            _context.SaveChanges();
-            return product.TaskToDoId;
+            if (product != null)
+            {
+                _context.ShoppingProducts.Remove(product);
+                _context.SaveChanges();
+                return product.ProductId;
+            }
+            return -1;
         }
-
-
     }
 }

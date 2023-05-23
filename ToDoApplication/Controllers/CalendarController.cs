@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Services.Interfaces;
 
-
 namespace ToDoApplication.Controllers
 {
     public class CalendarController : Controller
@@ -21,6 +20,5 @@ namespace ToDoApplication.Controllers
             ViewBag.Events = calendarEvents;
             return View();
         }
-
     }
 }

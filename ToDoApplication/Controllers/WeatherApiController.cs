@@ -6,6 +6,7 @@ namespace ToDoApplication.Controllers
     public class WeatherApiController : Controller
     {
         private readonly IWeatherApiService _weatherApiService;
+
         public WeatherApiController(IWeatherApiService weatherApiService)
         {
             _weatherApiService = weatherApiService;
@@ -15,10 +16,11 @@ namespace ToDoApplication.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult Index(string location, string date, string time)
         {
-            var response = _weatherApiService.Get(location, date, time);
+            var response = _weatherApiService.GetWeather(location, date, time);
             return View(response);
         }
     }

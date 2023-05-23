@@ -68,7 +68,7 @@
                 </tbody>
             </table>
 
-            @if (Model.TaskToDo.shoppingLists != null)
+            @if (Model.TaskToDo.ShoppingProducts != null)
             {
                 <h4>Shopping Products</h4>
                 <table class="table table-striped">
@@ -84,16 +84,16 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.HiddenFor(x => x.ShoppingProducts[i].productId)
-                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].name, new { @class = "form-control", @placeholder="Name" })
+                                    @Html.HiddenFor(x => x.ShoppingProducts[i].ProductId)
+                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].Name, new { @class = "form-control", @placeholder="Name" })
                                 </td>
                                 <td>
-                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].quantity, new { @class = "form-control", @type="number", @placeholder="Quantity" })
+                                    @Html.TextBoxFor(x => x.ShoppingProducts[i].Quantity, new { @class = "form-control", @type="number", @placeholder="Quantity" })
                                 </td>
                                 <td>
                                     @using (Html.BeginForm("Delete", "ShoppingProduct", FormMethod.Post))
                                     {
-                                        @Html.Hidden("productId", Model.ShoppingProducts[i].productId)
+                                        @Html.Hidden("productId", Model.ShoppingProducts[i].ProductId)
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                                     }
                                 </td>

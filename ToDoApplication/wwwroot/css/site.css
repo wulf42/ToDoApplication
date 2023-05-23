@@ -36,27 +36,22 @@ body {
 }
 
 .ToDo {
-    background-color: #93BFCF;  
+    background-color: #93BFCF;
 }
 
 .Inprogress {
-    background-color: #BDCDD6;   
+    background-color: #BDCDD6;
 }
 
 .Done {
-    background-color: #93BFCF;   
+    background-color: #93BFCF;
 }
-
-
-
-
 
 .Daily {
     height: 55.5vh;
     margin-left: 1em;
     background: #e9db94;
     position: relative;
-
 }
 
     .Daily:after {
@@ -79,7 +74,6 @@ body {
         border-style: solid;
         border-color: #d7c981 transparent;
     }
-
 
 .form-check-input:checked {
     background-color: green;
@@ -112,8 +106,9 @@ caption {
 .list-group-item-warning {
     background-color: #FAF0BE;
 }
+
 .list-group {
-    overflow:auto;
-    height:90%;
-    width:100%;
+    overflow: auto;
+    height: 90%;
+    width: 100%;
 }

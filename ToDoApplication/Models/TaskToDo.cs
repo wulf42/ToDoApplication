@@ -32,6 +32,4 @@ namespace ToDoApplication.Models
     {
         ToDo, InProgress, Done, Daily
     }
-
-
 }
