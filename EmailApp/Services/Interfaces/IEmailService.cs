@@ -4,6 +4,6 @@ namespace EmailApp.Services.Interfaces
 {
     public interface IEmailService
     {
-        void SendEmail(Mail body);
+        Task SendEmailAsync(Mail body);
     }
 }

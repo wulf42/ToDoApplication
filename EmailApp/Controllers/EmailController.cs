@@ -16,14 +16,14 @@ namespace EmailApp.Controllers
 
         [Route("api/[controller]")]
         [HttpPost]
-        public IActionResult SendEmail([FromBody] Mail body)
+        public async Task<IActionResult> SendEmail([FromBody] Mail body)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _emailService.SendEmail(body);
+            await _emailService.SendEmailAsync(body);
             return Ok("Email has been sent");
         }
     }
