@@ -33,13 +33,12 @@ namespace ToDoApplication.Services
                     end = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
                     backgroundColor = color,
                     borderColor = color,
-                    startTime = task.Time,
-                    endTime = task.Time.AddHours(1),
-                    dow = task.Status == Status.Daily ? new int[] { 0, 1, 2, 3, 4, 5, 6 } : null
                 };
-
                 if (task.Status == Status.Daily)
                 {
+                    calendarEvent.startTime = task.Time;
+                    calendarEvent.endTime = task.Time.AddHours(1);
+                    calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
                     calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
                 }
 
