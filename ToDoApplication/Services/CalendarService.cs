@@ -17,12 +17,20 @@ namespace ToDoApplication.Services
 
         public List<CustomCalendarEvent> GetCalendarEvents()
         {
+            if (_httpContextAccessor.HttpContext == null)
+            {
+                return new List<CustomCalendarEvent>();
+            }
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
             var tasks = _context.TasksToDo.Where(t => t.addedBy == userId).ToList();
 
             var events = new List<CustomCalendarEvent>();
             foreach (var task in tasks)
             {
+                if (task.Name == null)
+                {
+                    continue;
+                }
                 var color = GetCategoryColor(task.Category);
 
                 var calendarEvent = new CustomCalendarEvent
@@ -48,7 +56,7 @@ namespace ToDoApplication.Services
             return events;
         }
 
-        private string GetCategoryColor(Category category)
+        private static string GetCategoryColor(Category category)
         {
             return category switch
             {
@@ -67,12 +75,12 @@ namespace ToDoApplication.Services
         public class CustomCalendarEvent
         {
             public int id { get; set; }
-            public string title { get; set; }
+            public required string title { get; set; }
             public DateTime start { get; set; }
             public DateTime end { get; set; }
             public bool allDay { get; set; } = false;
-            public string backgroundColor { get; set; }
-            public string borderColor { get; set; }
+            public required string backgroundColor { get; set; }
+            public required string borderColor { get; set; }
             public string display { get; set; } = "block";
             public TimeOnly? startTime { get; set; }
             public TimeOnly? endTime { get; set; }

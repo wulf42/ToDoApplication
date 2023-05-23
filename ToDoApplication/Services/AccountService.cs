@@ -32,6 +32,11 @@ namespace ToDoApplication.Services
             {
                 var user = await _userManager.FindByNameAsync(userName);
 
+                if (user == null)
+                {
+                    return SignInResult.Failed;
+                }
+
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
                     result = SignInResult.NotAllowed;
@@ -84,6 +89,11 @@ namespace ToDoApplication.Services
         {
             string decodedToken = Uri.UnescapeDataString(token);
             var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "The user with the provided identifier was not found." });
+            }
+
             var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
             return result;
         }
