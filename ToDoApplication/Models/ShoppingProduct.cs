@@ -7,13 +7,13 @@ namespace ToDoApplication.Models
     {
         [Key]
         public int ProductId { get; set; }
-
+        [Required]
         public string Name { get; set; }
         public int Quantity { get; set; }
 
         [ForeignKey("TaskToDo")]
         public int TaskToDoId { get; set; }
-
+        [Required]
         public TaskToDo TaskToDo { get; set; }
     }
 }
