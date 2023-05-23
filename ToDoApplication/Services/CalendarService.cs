@@ -22,7 +22,7 @@ namespace ToDoApplication.Services
                 return new List<CustomCalendarEvent>();
             }
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
-            var tasks = _context.TasksToDo.Where(t => t.addedBy == userId).ToList();
+            var tasks = _context.TasksToDo.Where(t => t.AddedBy == userId).ToList();
 
             var events = new List<CustomCalendarEvent>();
             foreach (var task in tasks)

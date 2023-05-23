@@ -19,8 +19,8 @@ namespace ToDoApplication.Models
 
         public Status Status { get; set; }
         public DateOnly? LastDone { get; set; }
-        public List<ShoppingProduct>? shoppingLists { get; set; }
-        public string? addedBy { get; set; }
+        public List<ShoppingProduct>? ShoppingLists { get; set; }
+        public string? AddedBy { get; set; }
     }
 
     public enum Category

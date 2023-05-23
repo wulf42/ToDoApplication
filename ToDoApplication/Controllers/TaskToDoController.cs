@@ -54,9 +54,9 @@ namespace ToDoApplication.Controllers
             //{
             //    return RedirectToAction("Index");   //WiP - Add validation
             //}
-            body.addedBy = HttpContext.Session.GetString("UserId");
+            body.AddedBy = HttpContext.Session.GetString("UserId");
 
-            if (body.addedBy == null)
+            if (body.AddedBy == null)
             {
                 return RedirectToAction("Index");
             }

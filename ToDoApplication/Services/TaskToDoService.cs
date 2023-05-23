@@ -56,7 +56,7 @@ namespace ToDoApplication.Services
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
 
             var tasksToDoList = _context.TasksToDo
-                                    .Where(t => t.addedBy == userId)
+                                    .Where(t => t.AddedBy == userId)
                                     .OrderBy(t => t.Date)
                                     .ThenBy(t => t.Time)
                                     .ToList();

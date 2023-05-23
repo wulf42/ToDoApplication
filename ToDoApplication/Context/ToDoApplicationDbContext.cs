@@ -20,7 +20,7 @@ namespace ToDoApplication.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Models.TaskToDo>()
-                .HasMany(x => x.shoppingLists)
+                .HasMany(x => x.ShoppingLists)
                 .WithOne(x => x.TaskToDo)
                 .HasForeignKey(x => x.TaskToDoId);
         }
