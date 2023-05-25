@@ -48,6 +48,12 @@ namespace ToDoApplication.Services
 
         public async Task<IdentityResult> Register(Register registerData)
         {
+            var existingUser = await _userManager.FindByEmailAsync(registerData.Email);
+            if (existingUser != null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Email already exists" });
+            }
+
             var newUser = new User
             {
                 UserName = registerData.UserName,
