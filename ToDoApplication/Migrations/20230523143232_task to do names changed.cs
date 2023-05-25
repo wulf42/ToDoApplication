@@ -6,6 +6,7 @@ namespace ToDoApplication.Migrations
 {
     /// <inheritdoc />
 #pragma warning disable CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
+
     public partial class tasktodonameschanged : Migration
 #pragma warning restore CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
     {
