@@ -149,7 +149,7 @@ namespace ToDoApplication.Services
         {
             var templatePath = Path.Combine("../EmailApp", "Templates", emailData.Template);
             var template = File.ReadAllText(templatePath);
-            var confirmEmailMail = new Mail
+            var MailData = new Mail
             {
                 From = "ToDoApp@localhost.com",
                 To = emailData.Email,
@@ -157,7 +157,7 @@ namespace ToDoApplication.Services
                 Message = string.Format(template, emailData.CallbackUrl)
             };
 
-            await _emailService.SendEmailAsync(confirmEmailMail);
+            await _emailService.SendEmailAsync(MailData);
         }
     }
 }
