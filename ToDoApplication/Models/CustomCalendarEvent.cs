@@ -8,7 +8,7 @@ namespace ToDoApplication.Models
         public int Id { get; set; }
 
         [JsonProperty("title")]
-        public required string Title { get; set; }
+        public string Title { get; set; }
 
         [JsonProperty("start")]
         public DateTime Start { get; set; }
@@ -20,10 +20,10 @@ namespace ToDoApplication.Models
         public bool AllDay { get; set; } = false;
 
         [JsonProperty("backgroundColor")]
-        public required string BackgroundColor { get; set; }
+        public string BackgroundColor { get; set; }
 
         [JsonProperty("borderColor")]
-        public required string BorderColor { get; set; }
+        public string BorderColor { get; set; }
 
         [JsonProperty("display")]
         public string Display { get; set; } = "block";

@@ -5,9 +5,9 @@ namespace ToDoApplication.Models
     public class Login
     {
         [Required]
-        public required string UserName { get; set; }
+        public string UserName { get; set; }
 
         [Required]
-        public required string Password { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -5,13 +5,13 @@ namespace ToDoApplication.Models
     public class Register
     {
         [Required]
-        public required string UserName { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public required string Password { get; set; }
+        public string Password { get; set; }
     }
 }
