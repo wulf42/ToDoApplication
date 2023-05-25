@@ -61,7 +61,7 @@ namespace ToDoApplication.Controllers
                 return RedirectToAction("Index");
             }
 
-            var id = _taskToDoService.Save(body);
+            _taskToDoService.Save(body);
 
             return RedirectToAction("Index");
         }
