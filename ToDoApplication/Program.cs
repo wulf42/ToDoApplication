@@ -37,9 +37,8 @@ builder.Services.AddSession(options =>
 
 // User Identity
 builder.Services.AddIdentity<User, IdentityRole>(options =>
-{
-    options.Password.RequiredLength = 8;
-}).AddEntityFrameworkStores<ToDoApplicationDbContext>().AddDefaultTokenProviders();
+    options.Password.RequiredLength = 8)
+    .AddEntityFrameworkStores<ToDoApplicationDbContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 
