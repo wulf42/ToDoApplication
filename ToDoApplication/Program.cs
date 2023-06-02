@@ -21,6 +21,7 @@ builder.Services.AddScoped<ITaskToDoService, TaskToDoService>();
 builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IWeatherApiService, WeatherApiService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IRoleInitializationService, RoleInitializationService>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
@@ -38,7 +39,17 @@ builder.Services.AddSession(options =>
 // User Identity
 builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredLength = 8)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ToDoApplicationDbContext>().AddDefaultTokenProviders();
+
+
+// Role inicjalization
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var roleInitializationService = scope.ServiceProvider.GetRequiredService<IRoleInitializationService>();
+    var roles = new[] { "Admin", "Moderator", "User" };
+    roleInitializationService.InitializeRolesAsync(roles).GetAwaiter().GetResult();
+}
 
 var app = builder.Build();
 
