@@ -1,4 +1,5 @@
 ﻿@using ToDoApplication.ViewModels;
+@using static ToDoApplication.ViewModels.UserRoles;
 @model List<UserRolesViewModel>
 
 @{
@@ -6,29 +7,49 @@
 }
 
 <h1>Manage Users</h1>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Email Confirmed?</th>
-            <th>Access Failed Count</th>
-            <th>Role</th>
-            <th>Is Active?</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+@using (Html.BeginForm("Edit", "ManageUsers", FormMethod.Post))
+{
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@user.User.UserName</td>
-                <td>@user.User.Email</td>
-                <td>@(user.User.EmailConfirmed ? "Yes" : "No")</td>
-                <td>@user.User.AccessFailedCount</td>
-                <td>@user.Role</td>
-                <td>@(user.User.IsActive ? "Yes" : "No")</td>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Email Confirmed?</th>
+                <th>Access Failed Count</th>
+                <th>Role</th>
+                <th>Is Active?</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].User.Id</td>
+                    <td>@Model[i].User.UserName</td>
+                    <td>
+                        @Html.HiddenFor(m => Model[i].User.Id)
+                        @Html.TextBoxFor(m => Model[i].User.Email, new { Name = "Model[" + i + "].Email" })
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(m => Model[i].User.EmailConfirmed, new { Name = "Model[" + i + "].IsEmailConfirmed" })
+                    </td>
+                    <td>@Model[i].User.AccessFailedCount</td>
+                    <td>
+                        @Html.DropDownListFor(u => Model[i].Role, new List<SelectListItem>
+                            {
+                            new SelectListItem { Text = "User", Value = UserRoleEnum.User.ToString() },
+                            new SelectListItem { Text = "Admin", Value = UserRoleEnum.Admin.ToString() },
+                            new SelectListItem { Text = "Moderator", Value = UserRoleEnum.Moderator.ToString() }
+                            })
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(m => Model[i].User.IsActive, new { Name = "Model[" + i + "].IsActive" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit">Save</button>
+}
