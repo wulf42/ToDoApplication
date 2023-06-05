@@ -22,6 +22,7 @@ builder.Services.AddScoped<ICalendarService, CalendarService>();
 builder.Services.AddScoped<IWeatherApiService, WeatherApiService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleInitializationService, RoleInitializationService>();
+builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
