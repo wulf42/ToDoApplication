@@ -29,4 +29,13 @@ namespace ToDoApplication.ViewModels
         public User User { get; set; }
         public string Role { get; set; }
     }
+    public static class UserRoles
+    {
+        public enum UserRoleEnum
+        {
+            User,
+            Admin,
+            Moderator
+        }
+    }
 }
