@@ -42,7 +42,6 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ToDoApplicationDbContext>().AddDefaultTokenProviders();
 
-
 // Role inicjalization
 using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {

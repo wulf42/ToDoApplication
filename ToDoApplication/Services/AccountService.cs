@@ -36,7 +36,6 @@ namespace ToDoApplication.Services
                 {
                     return SignInResult.Failed;
                 }
-
                 else if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
                     result = SignInResult.NotAllowed;
@@ -69,7 +68,7 @@ namespace ToDoApplication.Services
             if (result.Succeeded)
             {
                 //Add role "User" to new user
-                var test = await _userManager.AddToRoleAsync(newUser, "User");
+                await _userManager.AddToRoleAsync(newUser, "User");
 
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                 string encodedToken = Uri.EscapeDataString(token);

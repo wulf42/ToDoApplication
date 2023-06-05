@@ -9,6 +9,5 @@ namespace ToDoApplication.Models
             IsActive = true;
         }
         public bool IsActive { get; set; }
-
     }
 }
