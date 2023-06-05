@@ -32,6 +32,11 @@ namespace ToDoApplication.Services
             {
                 var user = await _userManager.FindByNameAsync(userName);
 
+                if (user == null)
+                {
+                    return SignInResult.Failed;
+                }
+
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
                     result = SignInResult.NotAllowed;
@@ -43,6 +48,12 @@ namespace ToDoApplication.Services
 
         public async Task<IdentityResult> Register(Register registerData)
         {
+            var existingUser = await _userManager.FindByEmailAsync(registerData.Email);
+            if (existingUser != null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Email already exists" });
+            }
+
             var newUser = new User
             {
                 UserName = registerData.UserName,
@@ -59,16 +70,16 @@ namespace ToDoApplication.Services
                 if (!string.IsNullOrEmpty(token))
                 {
                     var callbackUrl = $"https://localhost:44300/Account/ConfirmEmail?userId={newUser.Id}&token={encodedToken}";
-                    var confirmEmailMail = new Mail
+
+                    var emailData = new SendEmailViewModel
                     {
-                        from = "ToDoApp@localhost.com",
-                        to = registerData.Email,
-                        subject = "ToDoApp Email Confirmation",
-                        message = $"Please confirm your email by clicking on the link below: \n<a href='{callbackUrl}'>Confirm Mail</a>",
+                        Email = newUser.Email,
+                        CallbackUrl = callbackUrl,
+                        Subject = "ToDoApp Email Confirmation",
+                        Template = "ConfirmEmail.html"
                     };
 
-                    //Send email confirmation
-                    _emailService.SendEmail(confirmEmailMail);
+                    await SendEmail(emailData);
                 }
             }
 
@@ -84,6 +95,11 @@ namespace ToDoApplication.Services
         {
             string decodedToken = Uri.UnescapeDataString(token);
             var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "The user with the provided identifier was not found." });
+            }
+
             var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
             return result;
         }
@@ -101,17 +117,16 @@ namespace ToDoApplication.Services
             var encodedToken = Uri.EscapeDataString(token);
             var callbackUrl = $"https://localhost:44300/Account/ResetPassword?email={email}&token={encodedToken}";
 
-            var resetPasswordMail = new Mail
+            var emailData = new SendEmailViewModel
             {
-                from = "ToDoApp@localhost.com",
-                to = user.Email,
-                subject = "ToDoApp Password Reset",
-                message = $"Please reset your password by clicking on the link below: <br><a href='{callbackUrl}'>Reset Password</a>",
+                Email = email,
+                CallbackUrl = callbackUrl,
+                Subject = "ToDoApp Forgot Password",
+                Template = "ForgotPassword.html"
             };
-
             try
             {
-                _emailService.SendEmail(resetPasswordMail);
+                await SendEmail(emailData);
             }
             catch (SmtpException)
             {
@@ -134,6 +149,21 @@ namespace ToDoApplication.Services
 
             var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.Password);
             return result;
+        }
+
+        private async Task SendEmail(SendEmailViewModel emailData)
+        {
+            var templatePath = Path.Combine("../EmailApp", "Templates", emailData.Template);
+            var template = File.ReadAllText(templatePath);
+            var MailData = new Mail
+            {
+                From = "ToDoApp@localhost.com",
+                To = emailData.Email,
+                Subject = emailData.Subject,
+                Message = string.Format(template, emailData.CallbackUrl)
+            };
+
+            await _emailService.SendEmailAsync(MailData);
         }
     }
 }

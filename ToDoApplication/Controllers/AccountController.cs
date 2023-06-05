@@ -10,13 +10,11 @@ namespace ToDoApplication.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly IAccountService _accountService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAccountService accountService)
+        public AccountController(UserManager<User> userManager, IAccountService accountService)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _accountService = accountService;
         }
 
@@ -34,6 +32,11 @@ namespace ToDoApplication.Controllers
 
         [HttpGet]
         public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AccessDenied()
         {
             return View();
         }
@@ -77,6 +80,10 @@ namespace ToDoApplication.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(userLoginData.UserName);
+                if (user == null)
+                {
+                    return NotFound();
+                }
                 HttpContext.Session.SetString("UserId", user.Id);
 
                 return RedirectToAction("Index", "TaskToDo");

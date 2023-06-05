@@ -18,9 +18,9 @@ namespace ToDoApplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string location, string date, string time)
+        public async Task<IActionResult> Index(string location, string date, string time)
         {
-            var response = _weatherApiService.GetWeather(location, date, time);
+            var response = await _weatherApiService.GetWeather(location, date, time);
             return View(response);
         }
     }

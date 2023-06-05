@@ -44,8 +44,8 @@
 <div class="ShoppingProductContainer">
     <div classs="row">
         @using (Html.BeginForm("Edit", "TaskToDo", FormMethod.Post))
-        {
-            @Html.ValidationSummary()
+        {           
+            @Html.ValidationSummary()           
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -83,12 +83,16 @@
                         @for (int i = 0; i < Model.ShoppingProducts.Count; i++)
                         {
                             <tr>
-                                <td>
+                                <td>                                    
                                     @Html.HiddenFor(x => x.ShoppingProducts[i].ProductId)
+                                    <div class="form-group form-group-lg">
                                     @Html.TextBoxFor(x => x.ShoppingProducts[i].Name, new { @class = "form-control", @placeholder="Name" })
+                                    </div>
                                 </td>
                                 <td>
+                                    <div class="form-group form-group-lg">
                                     @Html.TextBoxFor(x => x.ShoppingProducts[i].Quantity, new { @class = "form-control", @type="number", @placeholder="Quantity" })
+                                    </div>
                                 </td>
                                 <td>
                                     @using (Html.BeginForm("Delete", "ShoppingProduct", FormMethod.Post))
@@ -100,7 +104,7 @@
                             </tr>
                         }
                     </tbody>
-                </table>
+                </table>          
             }
             <div id="add-product-container"></div>
             <div class="col">

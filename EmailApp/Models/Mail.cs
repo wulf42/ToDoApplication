@@ -2,9 +2,9 @@
 {
     public class Mail
     {
-        public string? from { get; set; }
-        public string? to { get; set; }
-        public string? subject { get; set; }
-        public string? message { get; set; }
+        public string? From { get; set; }
+        public string? To { get; set; }
+        public string? Subject { get; set; }
+        public string? Message { get; set; }
     }
 }

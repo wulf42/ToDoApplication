@@ -8,13 +8,13 @@
             <tbody>
                 <tr>
                     <td>
-                        <div class="form-group">
+                        <div class="form-group form-group-lg">
                             @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
                         </div>
                     </td>
                     <td>
-                        <div class="form-group">
-                            @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", type = "number", @value = "1" })
+                        <div class="form-group form-group-lg">
+                            @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", type = "number", @placeholder="Quantity" })
                         </div>
                     </td>
                     <td>

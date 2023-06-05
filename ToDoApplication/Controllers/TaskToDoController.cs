@@ -54,14 +54,14 @@ namespace ToDoApplication.Controllers
             //{
             //    return RedirectToAction("Index");   //WiP - Add validation
             //}
-            body.addedBy = HttpContext.Session.GetString("UserId");
+            body.AddedBy = HttpContext.Session.GetString("UserId");
 
-            if (body.addedBy == null)
+            if (body.AddedBy == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var id = _taskToDoService.Save(body);
+            _taskToDoService.Save(body);
 
             return RedirectToAction("Index");
         }

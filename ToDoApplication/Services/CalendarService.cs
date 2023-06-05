@@ -17,29 +17,37 @@ namespace ToDoApplication.Services
 
         public List<CustomCalendarEvent> GetCalendarEvents()
         {
+            if (_httpContextAccessor.HttpContext == null)
+            {
+                return new List<CustomCalendarEvent>();
+            }
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
-            var tasks = _context.TasksToDo.Where(t => t.addedBy == userId).ToList();
+            var tasks = _context.TasksToDo.Where(t => t.AddedBy == userId).ToList();
 
             var events = new List<CustomCalendarEvent>();
             foreach (var task in tasks)
             {
+                if (task.Name == null)
+                {
+                    continue;
+                }
                 var color = GetCategoryColor(task.Category);
 
                 var calendarEvent = new CustomCalendarEvent
                 {
-                    id = task.TaskId,
-                    title = task.Name,
-                    start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan(),
-                    end = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
-                    backgroundColor = color,
-                    borderColor = color,
+                    Id = task.TaskId,
+                    Title = task.Name,
+                    Start = new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan(),
+                    End = (new DateTime(task.Date.Year, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan()).AddHours(1),
+                    BackgroundColor = color,
+                    BorderColor = color,
                 };
                 if (task.Status == Status.Daily)
                 {
-                    calendarEvent.startTime = task.Time;
-                    calendarEvent.endTime = task.Time.AddHours(1);
-                    calendarEvent.dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-                    calendarEvent.end = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
+                    calendarEvent.StartTime = task.Time;
+                    calendarEvent.EndTime = task.Time.AddHours(1);
+                    calendarEvent.Dow = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+                    calendarEvent.End = new DateTime(9999, task.Date.Month, task.Date.Day) + task.Time.ToTimeSpan();
                 }
 
                 events.Add(calendarEvent);
@@ -48,7 +56,7 @@ namespace ToDoApplication.Services
             return events;
         }
 
-        private string GetCategoryColor(Category category)
+        private static string GetCategoryColor(Category category)
         {
             return category switch
             {
@@ -62,21 +70,6 @@ namespace ToDoApplication.Services
                 Category.ShoppingList => "#ffc0cb", // różowy
                 _ => "#6c757d"                      // szary
             };
-        }
-
-        public class CustomCalendarEvent
-        {
-            public int id { get; set; }
-            public string title { get; set; }
-            public DateTime start { get; set; }
-            public DateTime end { get; set; }
-            public bool allDay { get; set; } = false;
-            public string backgroundColor { get; set; }
-            public string borderColor { get; set; }
-            public string display { get; set; } = "block";
-            public TimeOnly? startTime { get; set; }
-            public TimeOnly? endTime { get; set; }
-            public int[]? dow { get; set; }
         }
     }
 }

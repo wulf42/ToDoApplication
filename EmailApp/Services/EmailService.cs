@@ -16,20 +16,23 @@ namespace EmailApp.Services
             _smtpClient = new SmtpClient();
         }
 
-        public void SendEmail(Mail mailModel)
+        public Task SendEmailAsync(Mail mailModel)
         {
-            string smtpAddress = "127.0.0.1";
-            int smtpPort = 32771;
+            const string smtpAddress = "127.0.0.1";
+            const int smtpPort = 32771;
 
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse(mailModel.from));
-            email.To.Add(MailboxAddress.Parse(mailModel.to));
-            email.Subject = mailModel.subject;
-            email.Body = new TextPart(TextFormat.Html) { Text = mailModel.message };
+            email.From.Add(MailboxAddress.Parse(mailModel.From));
+            email.To.Add(MailboxAddress.Parse(mailModel.To));
+            email.Subject = mailModel.Subject;
+            email.Body = new TextPart(TextFormat.Html) { Text = mailModel.Message };
 
-            _smtpClient.Connect(smtpAddress, smtpPort, SecureSocketOptions.None);
-            _smtpClient.Send(email);
-            _smtpClient.Disconnect(true);
+            return Task.Run(async () =>
+            {
+                await _smtpClient.ConnectAsync(smtpAddress, smtpPort, SecureSocketOptions.None);
+                await _smtpClient.SendAsync(email);
+                await _smtpClient.DisconnectAsync(true);
+            });
         }
     }
 }

@@ -48,13 +48,18 @@ namespace ToDoApplication.Services
 
         public List<TaskToDo> GetAll()
         {
+            if (_httpContextAccessor.HttpContext == null)
+            {
+                return new List<TaskToDo>();
+            }
+
             var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
 
             var tasksToDoList = _context.TasksToDo
-                .Where(t => t.addedBy == userId)
-                .OrderBy(t => t.Date)
-                .ThenBy(t => t.Time)
-                .ToList();
+                                    .Where(t => t.AddedBy == userId)
+                                    .OrderBy(t => t.Date)
+                                    .ThenBy(t => t.Time)
+                                    .ToList();
 
             return tasksToDoList;
         }
@@ -71,6 +76,11 @@ namespace ToDoApplication.Services
         {
             var taskToDo = _context.TasksToDo.Find(id);
 
+            if (taskToDo == null)
+            {
+                return -1;
+            }
+
             RemoveShoppingProducts(taskToDo);
 
             _context.TasksToDo.Remove(taskToDo);
@@ -83,6 +93,11 @@ namespace ToDoApplication.Services
         {
             var taskToUpdate = _context.TasksToDo.Find(id);
 
+            if (taskToUpdate == null)
+            {
+                return -1;
+            }
+
             EditTaskFormData(taskToUpdate, body.TaskToDo);
             MoveToNextCategory(taskToUpdate, body.TaskToDo);
             EditShoppingProducts(taskToUpdate, body.ShoppingProducts);
@@ -91,7 +106,7 @@ namespace ToDoApplication.Services
             return taskToUpdate.TaskId;
         }
 
-        private void EditTaskFormData(TaskToDo task, TaskToDoViewModel taskViewModel)
+        private static void EditTaskFormData(TaskToDo task, TaskToDoViewModel taskViewModel)
         {
             if (taskViewModel != null && taskViewModel.TaskId != 0)
             {
@@ -102,23 +117,23 @@ namespace ToDoApplication.Services
                 task.Time = taskViewModel.Time;
             }
 
-            if (taskViewModel != null && taskViewModel.Status == Status.Daily)
+            if (taskViewModel?.Status == Status.Daily)
             {
                 task.LastDone = taskViewModel.LastDone;
             }
         }
 
-        private void MoveToNextCategory(TaskToDo task, TaskToDoViewModel taskViewModel)
+        private static void MoveToNextCategory(TaskToDo task, TaskToDoViewModel taskViewModel)
         {
             if (taskViewModel == null)
             {
-                task.Status += 1;
+                task.Status++;
             }
         }
 
         private void EditShoppingProducts(TaskToDo task, List<ShoppingProductViewModel> shoppingProducts)
         {
-            if (shoppingProducts != null && shoppingProducts.Count > 0)
+            if (shoppingProducts?.Count > 0)
             {
                 foreach (var shoppingProductViewModel in shoppingProducts)
                 {

@@ -5,7 +5,10 @@
 namespace ToDoApplication.Migrations
 {
     /// <inheritdoc />
+#pragma warning disable CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
+
     public partial class shoppingproduct : Migration
+#pragma warning restore CS8981 // Nazwa typu zawiera tylko małe litery ascii. Takie nazwy mogą zostać zarezerwowane dla języka.
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,10 +25,12 @@ namespace ToDoApplication.Migrations
                 name: "ShoppingProduct",
                 newName: "ShoppingProducts");
 
+#pragma warning disable RCS1205 // Order named arguments according to the order of parameters.
             migrationBuilder.RenameIndex(
                 name: "IX_ShoppingProduct_TaskToDoId",
                 table: "ShoppingProducts",
                 newName: "IX_ShoppingProducts_TaskToDoId");
+#pragma warning restore RCS1205 // Order named arguments according to the order of parameters.
 
             migrationBuilder.AlterColumn<int>(
                 name: "TaskToDoId",
@@ -63,10 +68,12 @@ namespace ToDoApplication.Migrations
                 name: "ShoppingProducts",
                 newName: "ShoppingProduct");
 
+#pragma warning disable RCS1205 // Order named arguments according to the order of parameters.
             migrationBuilder.RenameIndex(
                 name: "IX_ShoppingProducts_TaskToDoId",
                 table: "ShoppingProduct",
                 newName: "IX_ShoppingProduct_TaskToDoId");
+#pragma warning restore RCS1205 // Order named arguments according to the order of parameters.
 
             migrationBuilder.AlterColumn<int>(
                 name: "TaskToDoId",

@@ -20,8 +20,8 @@ namespace ToDoApplication.Controllers
 
         public IActionResult Save(int taskId)
         {
-            var model = new ShoppingProduct();
-            model.TaskToDoId = taskId;
+            var model = new ShoppingProduct() { TaskToDoId = taskId };
+
             return PartialView("_addShoppingProduct", model);
         }
 
