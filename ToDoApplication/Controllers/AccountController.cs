@@ -35,6 +35,11 @@ namespace ToDoApplication.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel body)
