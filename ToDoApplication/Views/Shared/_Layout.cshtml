@@ -29,7 +29,7 @@
                             </a>
 
                         </li>
-                        @*Logged user nav: Logout*@
+                        @*Logged user nav: Calendar, Admin Panel*@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -37,6 +37,14 @@
                                     <i class="bi bi-calendar-check"></i> Calendar
                                 </a>
                             </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="AdminPanel" asp-action="Index">
+                                        <i class="bi bi-shield-fill"></i> Admin Panel
+                                    </a>
+                                </li>
+                            }
                         }
                     </ul>
                     @*Logged user nav: Logout*@
