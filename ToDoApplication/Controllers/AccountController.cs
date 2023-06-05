@@ -94,6 +94,10 @@ namespace ToDoApplication.Controllers
                 {
                     ModelState.AddModelError("", "Email not confirmed.");
                 }
+                else if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Account is not active.");
+                }
                 else
                 {
                     ModelState.AddModelError("", "Invalid login attempt.");
