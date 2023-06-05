@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApplication.Models;
+using ToDoApplication.Services.Interfaces;
 using ToDoApplication.ViewModels;
 
 namespace ToDoApplication.Controllers
@@ -14,13 +15,15 @@ namespace ToDoApplication.Controllers
             return View();
         }
     }
-
+    [Authorize(Roles = "Admin")]
     public class ManageUsersController : Controller
     {
+        private readonly IAdminPanelService _adminPanelService;
         private readonly UserManager<User> _userManager;
 
-        public ManageUsersController(UserManager<User> userManager)
+        public ManageUsersController(IAdminPanelService adminPanelService, UserManager<User> userManager)
         {
+            _adminPanelService = adminPanelService;
             _userManager = userManager;
         }
 
@@ -44,6 +47,27 @@ namespace ToDoApplication.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(List<UserRolesViewModel> model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _adminPanelService.EditUsers(model);
+
+            if (result)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error occurred while editing users.");
+                return View(model);
+            }
         }
     }
 }
