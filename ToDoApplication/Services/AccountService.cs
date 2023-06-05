@@ -26,7 +26,7 @@ namespace ToDoApplication.Services
             var userName = login.UserName;
             var password = login.Password;
 
-            var result = await _signInManager.PasswordSignInAsync(userName, password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(userName, password, false, true);
 
             if (result.Succeeded)
             {
@@ -37,9 +37,13 @@ namespace ToDoApplication.Services
                     return SignInResult.Failed;
                 }
 
-                if (!await _userManager.IsEmailConfirmedAsync(user))
+                else if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
                     result = SignInResult.NotAllowed;
+                }
+                else if (!user.IsActive)
+                {
+                    result = SignInResult.LockedOut;
                 }
             }
 
