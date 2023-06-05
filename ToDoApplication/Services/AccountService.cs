@@ -64,6 +64,9 @@ namespace ToDoApplication.Services
 
             if (result.Succeeded)
             {
+                //Add role "User" to new user
+                var test = await _userManager.AddToRoleAsync(newUser, "User");
+
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                 string encodedToken = Uri.EscapeDataString(token);
 
